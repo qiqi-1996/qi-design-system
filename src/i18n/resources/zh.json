@@ -1,0 +1,58 @@
+{
+    "common": {
+        "semantic": "语义化",
+        "disable-default": "禁用默认样式",
+        "disable-default-desc": "例如：移除 tailwind 中默认的 --text-md 等主题定义"
+    },
+    "schema": {
+        "space": {
+            "title": "定义空间系统",
+            "desc": "通过定义统一的间距规则，在界面中建立有序的视觉层次与信息关联。",
+            "base": {
+                "title": "基础数值",
+                "desc": "例如：4、8、10 等。"
+            },
+            "unit": {
+                "title": "数值单位",
+                "desc": "例如：px, rem 等。"
+            }
+        },
+        "color": {
+            "title": "定义颜色系统",
+            "type": {
+                "title": "色彩调和",
+                "desc": "使用何种方法生成色板"
+            },
+            "semantic": {
+                "desc": "定义颜色语义名称和颜色关系（如：品牌色默认颜色为主色板的600号色（bg-brand-solid），{ brand: { default: { solid: \"primary-600\" } } }）"
+            },
+            "palettes": {
+                "title": "色板",
+                "name": "颜色名称",
+                "name-desc": "例如：primary, brand, success, error, etc.",
+                "base": "基本颜色",
+                "base-desc": "支持输入任意 CSS 颜色值，但未必所有框架均能支持，比如：Tailwind v3 不支持 oklch",
+                "method": "生成算法",
+                "args": "色板生成算法参数元组"
+            }
+        },
+        "font": {
+            "line-height": {
+                "title": "行高",
+                "semantic-desc": "推荐和字号语义保持一致，\n例如：字号定义中有 { \"title\": \"24px\" }，\n则对应的行高语义定义应该为 { \"title-xs\": \"24px\", \"title-sm\": \"28px\", \"title-md\": \"32px\" }",
+                "auto": {
+                    "title": "根据字号自动生成行高",
+                    "value": "递增数值",
+                    "value-desc": "例如：基础字号 14px，递增数值 4px 则行高会生成 14px、18px、22px",
+                    "range": "生成范围",
+                    "range-desc": "例如：[0, 2] 则表示基于字号（14px）和递增数值（4px），生成从 14 + (4 * 0) 到 14 + (4 * 2) 的行高，并依次匹配语义名称：text-xs: 14px; text-sm: 18px; text-md: 22px;"
+                }
+            },
+            "weight": {
+                "title": "字重",
+                "semantic-desc": "推荐和字号语义保持一致，\n例如：字号定义中有 { \"text\": \"14px\", \"title\": \"24px\" }，\n则对应的字重语义定义应该为 { \"text\": \"400\", \"title\": \"700\" }"
+            }
+        },
+        "output": {}
+    }
+}

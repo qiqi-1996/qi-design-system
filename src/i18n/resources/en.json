@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "color": {
+            "title": "Define Color System",
+            "semantic": {
+                "title": "Semanticization"
+            },
+            "palettes": {
+                "title": "Color Palettes",
+                "name": "Color Name",
+                "name-desc": "E.g.: primary, brand, success, error, etc.",
+                "base": "Base Color",
+                "base-desc": "Supports input of any CSS color value, but not all frameworks may support it. For example: Tailwind v3 does not support oklch",
+                "method": "Generation Algorithm",
+                "args": "Color Palette Generation Algorithm Parameter Tuple"
+            }
+        }
+    }
+}

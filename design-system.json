@@ -1,0 +1,65 @@
+{
+    "$schema": "./dist/schema-zh.json",
+    "output": {
+        "tailwind-v4": "./src-docs/theme.css"
+    },
+    "space": {
+        "base": 8,
+        "unit": "px"
+    },
+    "color": {
+        "palettes": [
+            {
+                "type": "ant-design",
+                "name": "brand",
+                "base": "#002FA7"
+            }
+        ],
+        "semantic": {
+            "primary": {
+                "default": {
+                    "type": "chakra",
+                    "solid": "brand-600"
+                }
+            },
+            "border": {
+                "default": {
+                    "type": "custom",
+                    "default": "#E7E7E7"
+                }
+            },
+            "color-footnote": {
+                "default": {
+                    "type": "custom",
+                    "default": "#9E9E9E"
+                }
+            }
+        }
+    },
+    "font": {
+        "size": {
+            "semantic": {
+                "footnote": "12px",
+                "text": "14px",
+                "subtitle": "16px",
+                "title": "24px",
+                "headline": "40px"
+            }
+        },
+        "lineHeight": {
+            "auto": {
+                "value": 4,
+                "range": [0, 3]
+            }
+        },
+        "weight": {
+            "semantic": {
+                "footnote": "400",
+                "text": "400",
+                "subtitle": "500",
+                "title": "600",
+                "headline": "800"
+            }
+        }
+    }
+}

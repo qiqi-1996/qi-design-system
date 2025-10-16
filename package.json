@@ -1,0 +1,56 @@
+{
+    "name": "@qiqi1996/design-system",
+    "version": "0.0.1",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+        "dev": "bun run vite",
+        "build:schema": "bun run ./src/build-schema.ts",
+        "build:cli": "bun build ./src/cli/index.ts --format cjs --target node --banner '#!/usr/bin/env node' --outfile ./dist/cli/main && bun run ./src/build-cli.ts",
+        "build": "del dist && make-dir dist && bun run build:schema && bun run build:cli",
+        "generate": "bun run src/cli/index.ts"
+    },
+    "files": [
+        "./dist"
+    ],
+    "bin": {
+        "qi-design-system": "./dist/cli/main"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "@types/lodash": "^4.17.20",
+        "@types/node": "^24.8.1",
+        "del-cli": "^7.0.0",
+        "make-dir-cli": "^4.0.0",
+        "prettier-plugin-tailwindcss": "^0.7.1",
+        "vite-plugin-pages": "^0.33.1"
+    },
+    "dependencies": {
+        "@ant-design/colors": "^7.2.1",
+        "@mantine/core": "^8.3.5",
+        "@mantine/hooks": "^8.3.5",
+        "@tailwindcss/vite": "^4.1.13",
+        "@types/react": "^19.1.10",
+        "@types/react-dom": "^19.1.7",
+        "@vitejs/plugin-react-swc": "^4.0.0",
+        "ahooks": "^3.9.5",
+        "classnames": "^2.5.1",
+        "globals": "^16.3.0",
+        "i18next": "^25.6.0",
+        "i18next-browser-languagedetector": "^8.2.0",
+        "lodash": "^4.17.21",
+        "package-directory": "^8.1.0",
+        "prettier": "^3.6.2",
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1",
+        "react-i18next": "^16.0.1",
+        "react-icons": "^5.5.0",
+        "react-json-view-lite": "^2.5.0",
+        "react-router-dom": "^7.9.4",
+        "tailwindcss": "^4.1.13",
+        "ts-essentials": "^10.1.1",
+        "typescript": "~5.8.3",
+        "vite": "^7.1.2",
+        "zod": "^4.1.12"
+    }
+}

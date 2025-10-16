@@ -1,0 +1,9 @@
+{
+    "tabWidth": 4,
+    "printWidth": 120,
+    "proseWrap": "preserve",
+    "semi": false,
+    "singleQuote": false,
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindStylesheet": "./src-docs/index.css"
+}
