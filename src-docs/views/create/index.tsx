@@ -1,12 +1,12 @@
 import { AppPage } from "@/components/app-layout/page"
-import { DesignSystemEditor } from "./editor"
-import { commonGenColorPalette, commonGenColorSemantic, genTailwindV4, type DesignSystemConfig } from "@core"
-import { useMemo, useState } from "react"
-import { DesignSystemPreview } from "./preview"
-import type { DesignSystemFlags } from "./editor/types"
-import { createTheme, MantineProvider } from "@mantine/core"
 import { generate } from "@ant-design/colors"
-import { omit, pick } from "lodash"
+import { commonGenColorPalette, commonGenColorSemantic, genTailwindV4, type DesignSystemConfig } from "@core"
+import { createTheme, MantineProvider } from "@mantine/core"
+import { pick } from "lodash"
+import { useMemo, useState } from "react"
+import { DesignSystemEditor } from "./editor"
+import type { DesignSystemFlags } from "./editor/types"
+import { DesignSystemPreview } from "./preview"
 
 export default function () {
     const [designSystemConfig, setDesignSystemConfig] = useState<DesignSystemConfig>({})

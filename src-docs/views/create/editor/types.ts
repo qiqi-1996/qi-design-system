@@ -8,4 +8,5 @@ export type DesignSystemEditorValue = {
 export type DesignSystemFlags = {
     space: boolean
     color: boolean
+    font: boolean
 }

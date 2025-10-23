@@ -1,9 +1,11 @@
 import { Button, CloseButton, Paper } from "@mantine/core"
 import { useListState } from "@mantine/hooks"
-import { useCallback, useEffect, useMemo, type ComponentProps, type ComponentType } from "react"
-import { LuPlus, LuTrash2 } from "react-icons/lu"
-import type { UnifiedFormProps } from "./types"
 import cs from "classnames"
+import { useEffect, useMemo, type ComponentProps, type ComponentType } from "react"
+import { LuPlus, LuTrash2 } from "react-icons/lu"
+import type { UnifiedFormProps } from "../types"
+
+export * from "./key-value-pairs-item"
 
 export function ArrayedForm<T = any>(
     props: UnifiedFormProps<T[] | undefined> & {

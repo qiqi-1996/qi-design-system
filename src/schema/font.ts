@@ -6,8 +6,12 @@ export const fontSchema = () =>
         .object({
             size: z
                 .object({
-                    semantic: z.record(z.string(), z.string()),
+                    semantic: z.record(z.string(), z.string()).meta({
+                        title: t("common.semantic"),
+                        desc: t("schema.font.size.semantic-desc"),
+                    }),
                 })
+                .optional()
                 .default({
                     semantic: {
                         footnote: "12px",
@@ -17,7 +21,9 @@ export const fontSchema = () =>
                         headline: "40px",
                     },
                 })
-                .optional(),
+                .meta({
+                    title: t("schema.font.size.title"),
+                }),
             lineHeight: z
                 .object({
                     semantic: z

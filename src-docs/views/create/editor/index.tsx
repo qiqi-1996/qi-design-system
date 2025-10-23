@@ -4,11 +4,12 @@ import cs from "classnames"
 import { assign, omit } from "lodash"
 import type { ComponentProps } from "react"
 import { useTranslation } from "react-i18next"
-import { LuLayoutDashboard, LuSwatchBook } from "react-icons/lu"
+import { LuLayoutDashboard, LuSwatchBook, LuText } from "react-icons/lu"
 import type { DeepPartial } from "ts-essentials"
 import { EditColor } from "./color"
 import EditSpace from "./space"
 import type { DesignSystemEditorValue } from "./types"
+import EditFont from "./font"
 
 export function DesignSystemEditor(
     props: UnifiedFormProps<DesignSystemEditorValue> & Omit<ComponentProps<"div">, "onChange">,
@@ -79,6 +80,36 @@ export function DesignSystemEditor(
                                     },
                                     flags: {
                                         color: true,
+                                    },
+                                })
+                            }
+                        />
+                    </Accordion.Panel>
+                </Accordion.Item>
+                <Accordion.Item value="2">
+                    <Accordion.Control icon={<LuText />}>
+                        <div className="flex w-full items-center justify-between pr-2">
+                            {t("design-system.font")}
+                            <Switch
+                                checked={flags.font}
+                                onChange={(evt) =>
+                                    updateValue({
+                                        flags: { font: evt.currentTarget.checked },
+                                    })
+                                }
+                            />
+                        </div>
+                    </Accordion.Control>
+                    <Accordion.Panel>
+                        <EditFont
+                            value={config.font}
+                            onChange={(font) =>
+                                updateValue({
+                                    config: {
+                                        font,
+                                    },
+                                    flags: {
+                                        font: true,
                                     },
                                 })
                             }

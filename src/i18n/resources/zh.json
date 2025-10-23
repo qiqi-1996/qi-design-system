@@ -37,6 +37,12 @@
             }
         },
         "font": {
+            "title": "定义文字系统",
+            "desc": "",
+            "size": {
+                "title": "字号",
+                "semantic-desc": "为字号进行语义化命名，例如：footnote=12px, text=14px, title=24px, etc."
+            },
             "line-height": {
                 "title": "行高",
                 "semantic-desc": "推荐和字号语义保持一致，\n例如：字号定义中有 { \"title\": \"24px\" }，\n则对应的行高语义定义应该为 { \"title-xs\": \"24px\", \"title-sm\": \"28px\", \"title-md\": \"32px\" }",
