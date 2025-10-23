@@ -10,6 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 // https://vite.dev/config/
 export default defineConfig({
     root: "./src-docs",
+    base: "/qi-design-system/",
     build: {
         outDir: resolve(__dirname, "dist/docs"),
     },
