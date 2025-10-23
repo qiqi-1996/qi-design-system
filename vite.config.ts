@@ -24,12 +24,8 @@ export default defineConfig({
         tailwindcss(),
         react(),
         pages({
-            dirs: [
-                {
-                    dir: "views",
-                    baseRoute: "/qi-design-system/",
-                },
-            ],
+            dirs: "views",
+            importPath: "absolute",
         }),
     ],
 })

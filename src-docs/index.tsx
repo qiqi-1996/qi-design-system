@@ -34,7 +34,7 @@ function App() {
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="qi-design-system">
             <ColorSchemeScript defaultColorScheme="auto" />
             <MantineProvider theme={theme} defaultColorScheme="auto">
                 <App />
