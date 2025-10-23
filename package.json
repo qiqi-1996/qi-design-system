@@ -7,7 +7,8 @@
         "dev": "bun run vite",
         "build:schema": "bun run ./src/build-schema.ts",
         "build:cli": "bun build ./src/cli/index.ts --format cjs --target node --banner '#!/usr/bin/env node' --outfile ./dist/cli/main && bun run ./src/build-cli.ts",
-        "build": "del dist && make-dir dist && bun run build:schema && bun run build:cli",
+        "build:docs": "bun run vite build",
+        "build": "del dist && make-dir dist && bun run build:schema && bun run build:cli && bun run build:docs",
         "generate": "bun run src/cli/index.ts"
     },
     "files": [
