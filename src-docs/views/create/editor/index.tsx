@@ -1,5 +1,5 @@
 import { type UnifiedFormProps } from "@/components/form"
-import { Accordion, Switch } from "@mantine/core"
+import { Accordion, Button, Switch } from "@mantine/core"
 import cs from "classnames"
 import { assign, omit } from "lodash"
 import type { ComponentProps } from "react"
@@ -10,6 +10,9 @@ import { EditColor } from "./color"
 import EditSpace from "./space"
 import type { DesignSystemEditorValue } from "./types"
 import EditFont from "./font"
+import { useFileDialog } from "@mantine/hooks"
+import { designSystemSchema } from "@core/schema"
+import saveFile from "save-file"
 
 export function DesignSystemEditor(
     props: UnifiedFormProps<DesignSystemEditorValue> & Omit<ComponentProps<"div">, "onChange">,
@@ -27,8 +30,44 @@ export function DesignSystemEditor(
             },
         })
 
+    const file = useFileDialog({
+        accept: "*.json",
+        multiple: false,
+        resetOnOpen: true,
+        async onChange(files) {
+            const file = files?.[0]
+            const text = await file?.text()
+            const config = designSystemSchema().parse(JSON.parse(text || "{}") || {})
+            props.onChange({
+                config,
+                flags: {
+                    space: !!config.space,
+                    color: !!config.color,
+                    font: !!config.font,
+                },
+            })
+        },
+    })
+
+    const handleSaveConfig = () => {
+        saveFile(JSON.stringify(config), "design-system.json")
+    }
+
+    const handleLoadConfig = () => {
+        file.open()
+    }
+
     return (
         <div {...omit(props, "onChange")} className={cs("w-[400px]", props.className)}>
+            <div className="mb-2 flex gap-1">
+                <Button fullWidth onClick={handleSaveConfig}>
+                    {t("editor.save-config-to-local")}
+                </Button>
+                <Button variant="default" fullWidth onClick={handleLoadConfig}>
+                    {t("editor.load-config-from-local")}
+                </Button>
+            </div>
+
             <Accordion className="w-full" variant="contained">
                 <Accordion.Item value="0">
                     <Accordion.Control icon={<LuLayoutDashboard />}>

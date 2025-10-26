@@ -7,6 +7,10 @@
         "_": "设计系统",
         "space": "空间系统",
         "color": "颜色系统",
-        "font": "字体系统"
+        "font": "文字系统"
+    },
+    "editor": {
+        "save-config-to-local": "保存配置到本地",
+        "load-config-from-local": "加载本地配置"
     }
 }

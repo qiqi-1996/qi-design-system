@@ -6,21 +6,24 @@ export const fontSchema = () =>
         .object({
             size: z
                 .object({
-                    semantic: z.record(z.string(), z.string()).meta({
-                        title: t("common.semantic"),
-                        desc: t("schema.font.size.semantic-desc"),
-                    }),
+                    semantic: z
+                        .record(z.string(), z.string())
+                        .meta({
+                            title: t("common.semantic"),
+                            desc: t("schema.font.size.semantic-desc"),
+                        })
+                        .optional(),
                 })
-                .optional()
                 .default({
                     semantic: {
-                        footnote: "12px",
-                        text: "14px",
-                        subtitle: "16px",
-                        title: "24px",
-                        headline: "40px",
+                        // footnote: "12px",
+                        // text: "14px",
+                        // subtitle: "16px",
+                        // title: "24px",
+                        // headline: "40px",
                     },
                 })
+                .optional()
                 .meta({
                     title: t("schema.font.size.title"),
                 }),
@@ -44,8 +47,8 @@ export const fontSchema = () =>
                                 }),
                             range: z
                                 .tuple([z.number(), z.number()])
-                                .optional()
                                 .default([0, 3])
+                                .optional()
                                 .meta({
                                     title: t("schema.font.line-height.auto.range"),
                                     description: t("schema.font.line-height.auto.range-desc"),

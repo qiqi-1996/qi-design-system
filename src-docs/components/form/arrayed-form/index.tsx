@@ -4,12 +4,13 @@ import cs from "classnames"
 import { useEffect, useMemo, type ComponentProps, type ComponentType } from "react"
 import { LuPlus, LuTrash2 } from "react-icons/lu"
 import type { UnifiedFormProps } from "../types"
+import { FormTitle, type FormTitleProps } from "../form-title"
 
 export * from "./key-value-pairs-item"
 
 export function ArrayedForm<T = any>(
     props: UnifiedFormProps<T[] | undefined> & {
-        title?: string
+        title?: string | FormTitleProps
         /**
          * 内联布局（无边框，输入组件和删除按钮维系在一行内）
          * Inline layout (no border, input components and delete buttons are maintained in one line)
@@ -48,9 +49,13 @@ export function ArrayedForm<T = any>(
 
     return (
         <div className="flex flex-col gap-1">
-            <div className="flex items-center justify-between">
-                <div className="text-footnote font-footnote text-color-footnote">{props.title}</div>
-                <Button size="compact-sm" variant="light" onClick={() => handleAdd()}>
+            <div className="flex items-center justify-between gap-1">
+                {typeof props.title === "string" ? (
+                    <div className="text-footnote font-footnote text-color-footnote">{props.title}</div>
+                ) : (
+                    <FormTitle {...props.title} />
+                )}
+                <Button className="shrink-0" size="compact-sm" variant="light" onClick={() => handleAdd()}>
                     <LuPlus />
                 </Button>
             </div>

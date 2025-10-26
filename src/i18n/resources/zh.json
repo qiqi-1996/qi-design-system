@@ -49,9 +49,9 @@
                 "auto": {
                     "title": "根据字号自动生成行高",
                     "value": "递增数值",
-                    "value-desc": "例如：基础字号 14px，递增数值 4px 则行高会生成 14px、18px、22px",
+                    "value-desc": "例如：基础字号 14px，递增数值 4 则行高会生成 14px、18px、22px",
                     "range": "生成范围",
-                    "range-desc": "例如：[0, 2] 则表示基于字号（14px）和递增数值（4px），生成从 14 + (4 * 0) 到 14 + (4 * 2) 的行高，并依次匹配语义名称：text-xs: 14px; text-sm: 18px; text-md: 22px;"
+                    "range-desc": "例如：[0, 2] 则表示基于字号（14px）和递增数值（4），生成从 14 + (4 * 0) 到 14 + (4 * 2) 的行高，并依次匹配语义名称：text-xs: 14px; text-sm: 18px; text-md: 22px;"
                 }
             },
             "weight": {

@@ -13,7 +13,7 @@ export function commonGenFont(fontConfig?: FontConfig) {
     const auto = fullFontConfig.lineHeight?.auto
     if (auto) {
         const step = auto.value ?? 4
-        const [begin, end] = auto.range
+        const [begin, end] = auto.range || [0, 0]
         const stepped = [...new Array(end - begin + 1)].map((_, idx) => (idx + begin) * step)
         toPairs(size).forEach(([key, value]) => {
             stepped.forEach((step, idx) => {

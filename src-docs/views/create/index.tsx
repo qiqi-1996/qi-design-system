@@ -13,6 +13,7 @@ export default function () {
     const [designSystemFlags, setDesignSystemFlags] = useState<DesignSystemFlags>({
         space: false,
         color: false,
+        font: false,
     })
 
     const generated = {
