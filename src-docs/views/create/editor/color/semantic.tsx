@@ -15,7 +15,7 @@ export type EditColorSemanticsValue = ({
 } & Partial<Exclude<ColorConfig["semantic"], undefined>[string]>)[]
 
 export const toEditColorSemanticsValue = (value: ColorConfig["semantic"]) =>
-    toPairs(value?.semantic ?? {}).map(([key, value]) => ({
+    toPairs(value ?? {}).map(([key, value]) => ({
         key,
         ...value,
     })) as EditColorSemanticsValue

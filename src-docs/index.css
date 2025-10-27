@@ -1,6 +1,7 @@
+@import "@mantine/core/styles.css";
 @import "tailwindcss";
 @import "./theme.css";
-@import "@mantine/core/styles.css";
+@import "./components.css";
 
 @font-face {
     font-family: "Outfit";
@@ -23,5 +24,5 @@ BODY,
         "Open Sans",
         "Helvetica Neue",
         sans-serif;
-    @apply w-full h-full text-text;
+    @apply h-full w-full text-text;
 }

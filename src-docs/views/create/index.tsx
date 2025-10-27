@@ -2,7 +2,7 @@ import { AppPage } from "@/components/app-layout/page"
 import { generate } from "@ant-design/colors"
 import { commonGenColorPalette, commonGenColorSemantic, genTailwindV4, type DesignSystemConfig } from "@core"
 import { createTheme, MantineProvider } from "@mantine/core"
-import { pick } from "lodash"
+import { isEmpty, pick } from "lodash"
 import { useMemo, useState } from "react"
 import { DesignSystemEditor } from "./editor"
 import type { DesignSystemFlags } from "./editor/types"
@@ -24,16 +24,15 @@ export default function () {
         },
     }
 
-    const theme = useMemo(
-        () =>
-            createTheme({
-                colors: {
-                    primary: (generated.color.palettes[0]?.[1].palette ?? generate("#002FA7")) as any,
-                },
-                primaryColor: "primary",
-            }),
-        [generated.color.palettes],
-    )
+    const theme = useMemo(() => {
+        const palette = generated.color.palettes[0]?.[1].palette
+        return createTheme({
+            colors: {
+                primary: (isEmpty(palette) ? generate("#002FA7") : palette) as any,
+            },
+            primaryColor: "primary",
+        })
+    }, [generated.color.palettes])
 
     const cssVariables = `:root{ ${genTailwindV4(pick(designSystemConfig, "color"), { noTheme: true })} }`
 

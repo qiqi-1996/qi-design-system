@@ -10,3 +10,6 @@ export const isColorVariable = (value: string): value is ColorVariable => {
     const [name, paletteKey] = value.split("-")
     return !!name && !!paletteKey && isString(name) && isColorPaletteKey(paletteKey)
 }
+
+export const resolveColorVariable = (value: string) =>
+    !isColorVariable(value) ? undefined : { name: value.split("-")[0], index: Number(value.split("-")[1]) / 100 - 1 }

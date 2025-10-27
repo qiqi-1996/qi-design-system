@@ -1,6 +1,6 @@
 import { ArrayedForm, ArrayedKeyValuePairsItemRender, FormTitle, type UnifiedFormProps } from "@/components/form"
 import { fontSchema, type FontConfig } from "@core"
-import { Accordion, Input, NumberInput, Paper } from "@mantine/core"
+import { Accordion, Input, NumberInput, Paper, Select } from "@mantine/core"
 import { fromPairs, toPairs } from "lodash"
 import { useTranslation } from "react-i18next"
 import { produce } from "immer"
@@ -61,7 +61,7 @@ export default function EditFont(props: UnifiedFormProps<FontConfig | undefined>
                         )
                     }}
                     itemDefaultValue={["", ""]}
-                    itemRender={ArrayedKeyValuePairsItemRender}
+                    itemRender={FontWeightItemRender}
                     inline
                 />
             </FormTitle>
@@ -143,6 +143,25 @@ export default function EditFont(props: UnifiedFormProps<FontConfig | undefined>
                     </Accordion>
                 </Paper>
             </FormTitle>
+        </div>
+    )
+}
+
+export function FontWeightItemRender(props: UnifiedFormProps<[key: string, value: any]>) {
+    const { value: [key, value] = ["", ""], onChange } = props
+
+    return (
+        <div className="flex gap-1">
+            <Input
+                placeholder="key"
+                value={key}
+                onChange={({ currentTarget: { value: newKey } }) => onChange([newKey, value])}
+            ></Input>
+            <Select
+                value={value}
+                onChange={(newValue) => onChange([key, newValue])}
+                data={["100", "200", "300", "400", "500", "600", "700", "800", "900"]}
+            />
         </div>
     )
 }

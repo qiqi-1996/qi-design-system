@@ -85,6 +85,7 @@ export const fontSchema = () =>
                                 z.literal("700"),
                                 z.literal("800"),
                                 z.literal("900"),
+                                z.literal(""),
                             ]),
                         )
                         .optional()

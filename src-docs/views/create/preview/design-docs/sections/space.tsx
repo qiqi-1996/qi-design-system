@@ -1,9 +1,13 @@
 import { spaceSchema, type SpaceConfig } from "@core/schema"
 import { ActionIcon, Button, Paper } from "@mantine/core"
 import { LuHeart, LuMessageSquare, LuSend } from "react-icons/lu"
-import { Measure } from "./elements"
+import { Measure, Title } from "../elements"
+import { useTranslation } from "react-i18next"
 
-export function SpaceDemo(props: { spaceConfig?: SpaceConfig }) {
+export function SectionSpace(props: { spaceConfig?: SpaceConfig }) {
+    const [t] = useTranslation()
+    const [tc] = useTranslation("core")
+
     const { spaceConfig } = props
 
     const spaceValue = (v: number) => {
@@ -57,10 +61,18 @@ export function SpaceDemo(props: { spaceConfig?: SpaceConfig }) {
     )
 
     return (
-        <div className="flex w-full items-center overflow-auto rounded-xl p-2">
-            {single}
-            <Measure style={{ width: spaceValue(8) }} label={spaceValue(8)} />
-            {single}
-        </div>
+        <>
+            <Title>
+                {t("design-system.space")}
+                {tc("schema.space.desc")}
+            </Title>
+            <div>
+                <div className="flex w-full items-center overflow-auto rounded-xl p-2">
+                    {single}
+                    <Measure style={{ width: spaceValue(8) }} label={spaceValue(8)} />
+                    {single}
+                </div>
+            </div>
+        </>
     )
 }

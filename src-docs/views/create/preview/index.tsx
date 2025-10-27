@@ -10,7 +10,7 @@ export function DesignSystemPreview(props: ComponentProps<"div"> & { value: Desi
             <Tabs defaultValue="docs" variant="pills">
                 <Tabs.List justify="center">
                     <Tabs.Tab value="docs">设计文档</Tabs.Tab>
-                    <Tabs.Tab value="developer">开发者JSON</Tabs.Tab>
+                    <Tabs.Tab value="developer">开发者</Tabs.Tab>
                 </Tabs.List>
 
                 <Tabs.Panel value="docs">

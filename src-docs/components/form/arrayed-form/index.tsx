@@ -25,7 +25,6 @@ export function ArrayedForm<T = any>(
     const Item = props.itemRender
 
     useEffect(() => {
-        console.log(props.value)
         api.setState(props.value ?? [])
         // ;(props.value ?? []).forEach((item, index) => {
         //     api.setItem(index, item)
