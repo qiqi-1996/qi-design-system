@@ -28,7 +28,20 @@ export default function () {
         const palette = generated.color.palettes[0]?.[1].palette
         return createTheme({
             colors: {
-                primary: (isEmpty(palette) ? generate("#002FA7") : palette) as any,
+                primary: (isEmpty(palette)
+                    ? [
+                          "#ebf0ff",
+                          "#d2ddfa",
+                          "#a0b8f7",
+                          "#6c90f6",
+                          "#446ff5",
+                          "#2f5af6",
+                          "#254ff7",
+                          "#1b41dc",
+                          "#1339c5",
+                          "#002fa7",
+                      ]
+                    : palette) as any,
             },
             primaryColor: "primary",
         })

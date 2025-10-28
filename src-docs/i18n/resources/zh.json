@@ -1,4 +1,7 @@
 {
+    "common": {
+        "description": "描述一次设计系统, 输出多套框架配置（Tailwind、Chakra UI、Ant Design 等等）。"
+    },
     "navbar": {
         "create": "创建",
         "docs": "文档"
@@ -8,6 +11,13 @@
         "space": "空间系统",
         "color": "颜色系统",
         "font": "文字系统"
+    },
+    "home": {
+        "title-build-bridge": "建立沟通桥梁去关联",
+        "title-designer-and-developer": "设计师与开发者",
+
+        "btn-create-design-system": "创建设计系统",
+        "btn-documentation": "查询文档"
     },
     "editor": {
         "save-config-to-local": "保存配置到本地",

@@ -1,8 +1,8 @@
 # Qi Design System
 
-使用统一的配置文件去描述设计系统, 然后自动生成到 Tailwind、Chakra UI 等等 UI 框架的配置。
+描述一次设计系统, 输出多套框架配置（Tailwind、Chakra UI、Ant Design 等等）。
 
-Languages: [中文](./README.zh-CN.md) | [English](./README.md)
+Languages: [中文](./README.zh-cn.md) | [English](./README.md)
 
 ## 快速上手
 

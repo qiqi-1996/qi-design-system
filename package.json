@@ -1,5 +1,6 @@
 {
     "name": "@qiqi1996/design-system",
+    "description": "Describe the design system once and output multiple framework configs (Tailwind, Chakra UI, Ant Design, etc.) | 描述一次设计系统, 输出多套框架配置。",
     "version": "0.0.2",
     "module": "index.ts",
     "type": "module",
@@ -27,8 +28,11 @@
         "qi-design-system": "./dist/cli/main"
     },
     "devDependencies": {
+        "@mdx-js/react": "^3.1.1",
+        "@mdx-js/rollup": "^3.1.1",
         "@types/bun": "latest",
         "@types/lodash": "^4.17.20",
+        "@types/mdx": "^2.0.13",
         "@types/node": "^24.8.1",
         "del-cli": "^7.0.0",
         "make-dir-cli": "^4.0.0",

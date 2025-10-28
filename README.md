@@ -1,8 +1,10 @@
 # Qi Design System
 
-Use a unified configuration file to describe the design system, and then automatically generate the configuration of Tailwind, Chakra UI and other UI frameworks.
+![banner](src-docs/public/banner.png)
 
-Languages: [中文](./README.zh-CN.md) | [English](./README.md)
+Describe the design system once and output multiple framework configs (Tailwind, Chakra UI, Ant Design, etc.).
+
+Languages: [中文](./README.zh-cn.md) | [English](./README.md)
 
 ## Quick Start
 

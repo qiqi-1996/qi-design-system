@@ -1,7 +1,9 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react-swc"
+import mdx from "@mdx-js/rollup"
 import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react-swc"
+import { defineConfig } from "vite"
 import pages from "vite-plugin-pages"
+
 import { dirname, resolve } from "path"
 import { fileURLToPath } from "url"
 
@@ -21,6 +23,10 @@ export default defineConfig({
         },
     },
     plugins: [
+        {
+            enforce: "pre",
+            ...mdx(),
+        },
         tailwindcss(),
         react(),
         pages({
