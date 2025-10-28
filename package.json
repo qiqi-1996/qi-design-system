@@ -1,8 +1,16 @@
 {
     "name": "@qiqi1996/design-system",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "module": "index.ts",
     "type": "module",
+    "publishConfig": {
+        "access": "public"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/qiqi-1996/qi-design-system"
+    },
     "scripts": {
         "dev": "bun run vite",
         "build:schema": "bun run ./src/build-schema.ts",
@@ -12,7 +20,8 @@
         "generate": "bun run src/cli/index.ts"
     },
     "files": [
-        "./dist"
+        "./dist/cli",
+        "./dist/*.json"
     ],
     "bin": {
         "qi-design-system": "./dist/cli/main"

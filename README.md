@@ -1,78 +1,39 @@
 # Qi Design System
 
-使用统一的配置文件去描述设计系统, 然后自动生成到 Tailwind、Chakra UI 等等 UI 框架的配置。
+Use a unified configuration file to describe the design system, and then automatically generate the configuration of Tailwind, Chakra UI and other UI frameworks.
 
-Languages: [中文](./README.md) | [English](./README.en.md)
+Languages: [中文](./README.zh-CN.md) | [English](./README.md)
 
-## 快速上手
+## Quick Start
 
-1. 安装
-   - `npm install -D @qiqi1996/design-system`
-   - `pnpm install -D @qiqi1996/design-system`
-   - `bun add -D @qiqi1996/design-system`
-2. 创建 `design-system.json`
-   - 注意：
-   - 你可以将 `$schema` 改为 `schema-zh.json` 或 `schema-en.json` 以查看多语言的 JSON 字段注释。（目前支持：中文、英语）
-   - 以下示例为：定义了 8px 的空间系统，和基于 Ant Design 的色板算法生成 品牌色（克莱因蓝） 色板，并将此色板应用到了 Chakra UI 的语义化命名。此设计系统配置将生成 Tailwind V4 版本的配置到 `./src-doc/src/theme.css` 文件中。
-```json
-{
-    "$schema": "./node_modules/@qiqi1996/design-system/schema-zh.json",
-    "output": {
-        "tailwind-v4": "./src-doc/src/theme.css"
-    },
-    "space": {
-        "base": 8,
-        "unit": "px"
-    },
-    "color": {
-        "palettes": [
-            {
-                "type": "monochromatic",
-                "name": "brand",
-                "base": "#002FA7"
-            }
-        ],
-        "semantic": {
-            "primary": {
-                "default": {
-                    "solid": "brand-600"
-                }
-            }
-        }
-    }
-}
-```
-3. 执行生成：qi-design-system --config /path/to/your/design-system.json
+## Features & Roadmap
 
-## 特性和计划
+### Color System Definition
 
-### 颜色系统定义
-
-- [ ] 颜色系统
-  - [ ] 单色色板生成
+- [ ] Color System
+  - [ ] Single-color Palette Generation
     - [x] Ant Design Color
     - [ ] Mantine Colors Generator
-  - [ ] 三元群配色方案
-  - [x] 语义化（基于 Chakra UI Semantic 定义）
-  - [ ] 暗黑模式
-- [ ] 字体系统
-  - [x] 字号（仅语义化定义）
-  - [x] 行高
-    - [x] 线性自动生成
-  - [x] 字重（仅语义化定义）
-- [x] 空间系统 
-- [ ] 圆角
-- [ ] 阴影
+  - [ ] Triadic Color Scheme
+  - [x] Semantic Definition (Based on Chakra UI Semantic Specifications)
+  - [ ] Dark Mode
+- [ ] Typography System
+  - [x] Font Sizes (Semantic Definition Only)
+  - [x] Line Heights
+    - [x] Linear Automatic Generation
+  - [x] Font Weights (Semantic Definition Only)
+- [x] Spacing System
+- [ ] Border Radii
+- [ ] Shadows
 
-### 内置配置生成器
+### Built-in Configuration Generators
 
-- [x] Talwind V4
-- [ ] Talwind V3
+- [x] Tailwind V4
+- [ ] Tailwind V3
 - [ ] Ant Design
 - [ ] Chakra UI
 - [ ] Mantine
 
-## 贡献
+## Contribution
 
-* 需要 Bun 运行环境（v1.3.0+）
-* 国际化注释和文档时，使用联合国五常语言之一的”中文“，作为主要语言。
+* Requires the Bun runtime environment (v1.3.0+).
