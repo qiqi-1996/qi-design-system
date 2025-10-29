@@ -1,9 +1,8 @@
 import { AppPage } from "@/components/app-layout/page"
 import { useTranslation } from "react-i18next"
 
-import bannerImg from "@/public/banner@2x.png"
 import { Badge, Button, Divider } from "@mantine/core"
-import { pkg } from "@/utils/pkg-info"
+import { pkg } from "@/utils/resources"
 
 export default function () {
     const [t] = useTranslation()
@@ -24,16 +23,18 @@ export default function () {
                         <Button>{t("home.btn-create-design-system")}</Button>
                         <Button variant="default">{t("home.btn-documentation")}</Button>
                         <Divider className="mx-2" orientation="vertical" />
-                        <Badge size="lg" variant="light">Version {pkg.version}</Badge>
-                        <Badge size="lg" variant="dot">Working In Progress</Badge>
+                        <Badge size="lg" variant="light">
+                            Version {pkg.version}
+                        </Badge>
+                        <Badge size="lg" variant="dot">
+                            Working In Progress
+                        </Badge>
                     </div>
 
                     <div className="mt-2 flex items-center gap-1"></div>
                 </div>
 
-                <div className="absolute top-1/2 right-0 inline-block -translate-y-1/2">
-                    <img className="h-[320px]" src={bannerImg} />
-                </div>
+                {/* <div className="absolute top-1/2 right-0 inline-block -translate-y-1/2"></div> */}
             </div>
 
             <Divider />

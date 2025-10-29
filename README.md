@@ -1,6 +1,6 @@
 # Qi Design System
 
-![banner](src-docs/public/banner.png)
+![banner](src-docs/assets/banner.png)
 
 Describe the design system once and output multiple framework configs (Tailwind, Chakra UI, Ant Design, etc.).
 

@@ -1,1 +1,29 @@
-# Hello World
+import { ExampleDesignSystemConfig } from "../../components/example-design-system-config"
+
+# 概述
+
+描述一次设计系统, 输出多套框架配置（Tailwind、Chakra UI、Ant Design 等等）。
+
+# 快速上手
+
+1. 安装依赖
+
+```
+npm install @qiqi1996/design-system
+```
+
+2. 创建设计系统描述文件 `design-system.json`
+
+<ExampleDesignSystemConfig />
+
+3. 构建配置
+
+```
+npx qi-design-system --config /path/to/design-system.json
+```
+
+命令行会默认获取项目根目录下的 `design-system.json` 可无需配置 `--config` 参数
+
+# 配置
+
+## output

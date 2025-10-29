@@ -1,0 +1,32 @@
+@reference "@/index.css";
+
+.markdown-content {
+    @apply leading-[2];
+
+    h1 {
+        @apply mt-5 mb-3 text-headline leading-headline-md font-headline;
+    }
+
+    h2 {
+        @apply text-title leading-title-md font-title;
+    }
+
+    ul {
+        li::before {
+            content: "";
+            @apply mr-1 inline-block h-1 w-1 rounded-full bg-primary;
+        }
+    }
+
+    ol {
+        @apply list-decimal;
+    }
+
+    code {
+        @apply rounded-md bg-black/5 p-0.5;
+    }
+
+    pre > code {
+        @apply bg-transparent;
+    }
+}

@@ -17,6 +17,7 @@
         "title-designer-and-developer": "设计师与开发者",
 
         "btn-create-design-system": "创建设计系统",
+        "btn-create-design-system-desc": "使用可视化界面快速创建设计系统配置 JSON",
         "btn-documentation": "查询文档"
     },
     "editor": {
