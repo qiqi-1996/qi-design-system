@@ -1,0 +1,80 @@
+import { ExampleDesignSystemConfig, GotoDesignSystemEditor } from "../../components/example-design-system-config"
+
+# Overview
+
+Describe a design system and output multiple sets of framework configurations (Tailwind, Chakra UI, Ant Design, etc.).
+
+# Quick Start
+
+1. Install Dependencies
+
+```
+npm install @qiqi1996/design-system
+```
+
+2. Create the design system description file `design-system.json`
+
+<ExampleDesignSystemConfig />
+
+3. Configure Output Location
+
+Modify the `output` field in `design-system.json` to meet project requirements. The example above indicates: Build the design system configuration in the form of tailwind-v4 and output it to the `./src-docs/theme.css` file.
+
+4. Build Configuration
+
+```
+npx qi-design-system --config /path/to/design-system.json
+```
+
+The command line will automatically retrieve the `design-system.json` in the project root directory, so the `--config` parameter can be omitted.
+
+# Configuration
+
+Most configurations can be set up and previewed using our visual editor. The following documentation is only recommended for users who configure manually.
+
+<GotoDesignSystemEditor />
+
+## Schema
+
+These are mainly JSON support features for editors to enhance intelligent prompts for fields. `Qi Design System` provides multi-language Schema files for use. Currently, the multi-language versions we offer are:
+
+- `schema-zh.json`: Simplified Chinese
+- `schema-en.json`: English
+
+### Example
+
+```
+{
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json",
+}
+```
+
+## Output
+
+Define the type of configuration to output and where to output the configuration. Currently supported output types are:
+
+- tailwind-v4: Theme configuration for Tailwind V4 version
+
+The output location can use a relative path, relative to the location of the design system configuration json file.
+
+### Format
+
+```
+{
+    "output": {
+        "Output Type": "Output Location"
+    }
+}
+```
+
+### Example
+
+Output the design system as the theme configuration of `Tailwind v4` and save it to `./src-docs/theme.css`
+
+```
+{
+    "output": {
+        "tailwind-v4": "./src-docs/theme.css"
+    }
+}
+```

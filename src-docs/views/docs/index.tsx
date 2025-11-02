@@ -1,7 +1,7 @@
 import { AppPage } from "@/components/app-layout/page"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { ContentZh } from "./content"
+import { ContentEn, ContentZh } from "./content"
 import styles from "./styles.module.css"
 
 export default function () {
@@ -10,6 +10,7 @@ export default function () {
         () =>
             ({
                 zh: ContentZh,
+                en: ContentEn,
             })[i18n.language] ?? ContentZh,
         [i18n.language],
     )

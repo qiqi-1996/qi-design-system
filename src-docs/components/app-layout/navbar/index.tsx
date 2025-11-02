@@ -43,6 +43,9 @@ export function AppNavbar(props: ComponentProps<"div">) {
                         { label: "English", value: "en" },
                     ]}
                 />
+                <ActiveBar activated={pathname === "/"}>
+                    <UnstyledButton onClick={() => navigate("/")}>{t("navbar.home")}</UnstyledButton>
+                </ActiveBar>
                 <ActiveBar activated={pathname === "/create"}>
                     <UnstyledButton onClick={() => navigate("/create")}>{t("navbar.create")}</UnstyledButton>
                 </ActiveBar>

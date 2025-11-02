@@ -6,9 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
 export function ExampleDesignSystemConfig() {
-    const [t] = useTranslation()
     const [configString, setConfigString] = useState("")
-    const navigate = useNavigate()
 
     useEffect(() => {
         formatJson(JSON.stringify(designSystemConfig)).then(setConfigString)
@@ -17,22 +15,30 @@ export function ExampleDesignSystemConfig() {
     return (
         <div className="my-2">
             <div className="h-[200px] overflow-auto rounded-xl bg-black/5 p-2">
-                <pre>
+                <pre className="!bg-transparent">
                     <code>{configString}</code>
                 </pre>
             </div>
-            <div className="mt-2 flex items-center gap-1">
-                <Button
-                    onClick={() => {
-                        navigate("/create")
-                    }}
-                >
-                    {t("home.btn-create-design-system")}
-                </Button>
-                <Badge size="lg" variant="dot">
-                    {t("home.btn-create-design-system-desc")}
-                </Badge>
-            </div>
+            <GotoDesignSystemEditor />
+        </div>
+    )
+}
+
+export function GotoDesignSystemEditor() {
+    const [t] = useTranslation()
+    const navigate = useNavigate()
+    return (
+        <div className="my-2 flex items-center gap-1">
+            <Button
+                onClick={() => {
+                    navigate("/create")
+                }}
+            >
+                {t("home.btn-create-design-system")}
+            </Button>
+            <Badge size="lg" variant="dot">
+                {t("home.btn-create-design-system-desc")}
+            </Badge>
         </div>
     )
 }

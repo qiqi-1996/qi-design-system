@@ -1,4 +1,4 @@
-import { ExampleDesignSystemConfig } from "../../components/example-design-system-config"
+import { ExampleDesignSystemConfig, GotoDesignSystemEditor } from "../../components/example-design-system-config"
 
 # 概述
 
@@ -16,7 +16,11 @@ npm install @qiqi1996/design-system
 
 <ExampleDesignSystemConfig />
 
-3. 构建配置
+3. 配置输出位置
+
+修改 `design-system.json` 中的 `output` 字段以符合项目需要。上方示例表示：将设计系统配置以 tailwind-v4 的形式构建，输出到 `./src-docs/theme.css` 文件中。
+
+4. 构建配置
 
 ```
 npx qi-design-system --config /path/to/design-system.json
@@ -26,4 +30,51 @@ npx qi-design-system --config /path/to/design-system.json
 
 # 配置
 
+大部分配置都可以使用我们的可视化编辑器进行配置和预览。以下文档仅推荐供纯手工配置的用户查阅。
+
+<GotoDesignSystemEditor />
+
+## schema
+
+这主要是一些编辑器对于 JSON 的支持特性，用于加强字段的智能提示。`Qi Design System` 提供了多语言的 Schema 文件可供使用。目前我们提供的多语言版本有：
+
+- `schema-zh.json`: 简体中文
+- `schema-en.json`: English
+
+### 例如
+
+```
+{
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json",
+}
+```
+
 ## output
+
+定义输出什么类型的配置，以及配置输出到什么位置。目前支持的输出类型有：
+
+- tailwind-v4: Tailwind V4 版本的主题配置
+
+输出位置可使用相对路径，相对于设计系统配置 json 的文件位置。
+
+### 格式
+
+```
+{
+    "output": {
+        "输出类型": "输出位置"
+    }
+}
+```
+
+### 例如
+
+将设计系统输出为 `Tailwind v4` 的主题配置，并且输出到 `./src-docs/theme.css`
+
+```
+{
+    "output": {
+        "tailwind-v4": "./src-docs/theme.css"
+    }
+}
+```

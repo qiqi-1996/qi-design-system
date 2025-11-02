@@ -4,11 +4,15 @@
     @apply leading-[2];
 
     h1 {
-        @apply mt-5 mb-3 text-headline leading-headline-md font-headline;
+        @apply mt-5 mb-3 text-headline leading-headline-xs font-headline text-primary;
     }
 
     h2 {
-        @apply text-title leading-title-md font-title;
+        @apply text-title leading-title-xs font-title my-2 text-primary;
+    }
+
+    h3 {
+        @apply text-subtitle leading-subtitle-xs font-subtitle my-2 text-primary;
     }
 
     ul {
@@ -22,11 +26,21 @@
         @apply list-decimal;
     }
 
+    li {
+        @apply my-1;
+    }
+
     code {
         @apply rounded-md bg-black/5 p-0.5;
     }
 
+    pre:has(code) {
+        code {
+            @apply !bg-transparent;
+        }
+        @apply my-1 rounded-md bg-black/5 p-1;
+    }
     pre > code {
-        @apply bg-transparent;
+        @apply p-1;
     }
 }

@@ -5,6 +5,7 @@ import { useEffect, useMemo, type ComponentProps, type ComponentType } from "rea
 import { LuPlus, LuTrash2 } from "react-icons/lu"
 import type { UnifiedFormProps } from "../types"
 import { FormTitle, type FormTitleProps } from "../form-title"
+import { useTranslation } from "react-i18next"
 
 export * from "./key-value-pairs-item"
 
@@ -21,6 +22,7 @@ export function ArrayedForm<T = any>(
         itemRender: ComponentType<UnifiedFormProps<T>>
     },
 ) {
+    const [t] = useTranslation()
     const [list, api] = useListState<T>(props.value ?? [])
     const Item = props.itemRender
 
@@ -77,7 +79,7 @@ export function ArrayedForm<T = any>(
                 )
             })}
             <Button leftSection={<LuPlus />} size="sm" variant="white" fullWidth onClick={() => handleAdd()}>
-                添加
+                {t("common.add")}
             </Button>
         </div>
     )

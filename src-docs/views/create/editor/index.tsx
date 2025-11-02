@@ -13,6 +13,7 @@ import EditFont from "./font"
 import { useFileDialog } from "@mantine/hooks"
 import { designSystemSchema } from "@core/schema"
 import saveFile from "save-file"
+import exampleDesignSystem from "../../../../design-system.json"
 
 export function DesignSystemEditor(
     props: UnifiedFormProps<DesignSystemEditorValue> & Omit<ComponentProps<"div">, "onChange">,
@@ -59,7 +60,7 @@ export function DesignSystemEditor(
 
     return (
         <div {...omit(props, "onChange")} className={cs("w-[400px]", props.className)}>
-            <div className="mb-2 flex gap-1">
+            <div className="flex gap-1">
                 <Button fullWidth onClick={handleSaveConfig}>
                     {t("editor.save-config-to-local")}
                 </Button>
@@ -67,6 +68,24 @@ export function DesignSystemEditor(
                     {t("editor.load-config-from-local")}
                 </Button>
             </div>
+            <Button
+                className="my-1"
+                variant="transparent"
+                fullWidth
+                onClick={() => {
+                    const config = exampleDesignSystem
+                    props.onChange({
+                        config: config as any,
+                        flags: {
+                            space: !!config.space,
+                            color: !!config.color,
+                            font: !!config.font,
+                        },
+                    })
+                }}
+            >
+                {t("editor.load-config-from-example")}
+            </Button>
 
             <Accordion className="w-full" variant="contained">
                 <Accordion.Item value="0">

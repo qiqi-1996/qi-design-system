@@ -1,19 +1,64 @@
 {
+    "common": {
+        "semantic": "Semantic",
+        "disable-default": "Disable Default Styles",
+        "disable-default-desc": "Example: Remove default theme definitions like --text-md in Tailwind"
+    },
     "schema": {
+        "space": {
+            "title": "Define Space System",
+            "desc": "Establish an ordered visual hierarchy and information association in the interface by defining unified spacing rules.",
+            "base": {
+                "title": "Base Value",
+                "desc": "Example: 4, 8, 10, etc."
+            },
+            "unit": {
+                "title": "Value Unit",
+                "desc": "Example: px, rem, etc."
+            }
+        },
         "color": {
             "title": "Define Color System",
+            "type": {
+                "title": "Color Harmony",
+                "desc": "The method used to generate the color palette"
+            },
             "semantic": {
-                "title": "Semanticization"
+                "desc": "Define color semantic names and color relationships (e.g.: The default brand color is the 600th color of the primary palette (bg-brand-solid), { brand: { default: { solid: \"primary-600\" } } })"
             },
             "palettes": {
                 "title": "Color Palettes",
                 "name": "Color Name",
-                "name-desc": "E.g.: primary, brand, success, error, etc.",
+                "name-desc": "Example: primary, brand, success, error, etc.",
                 "base": "Base Color",
-                "base-desc": "Supports input of any CSS color value, but not all frameworks may support it. For example: Tailwind v3 does not support oklch",
+                "base-desc": "Supports any CSS color value input, but not all frameworks may support it. For example: Tailwind v3 does not support oklch",
                 "method": "Generation Algorithm",
                 "args": "Color Palette Generation Algorithm Parameter Tuple"
             }
-        }
+        },
+        "font": {
+            "title": "Define Typography System",
+            "desc": "",
+            "size": {
+                "title": "Font Size",
+                "semantic-desc": "Semantically name font sizes. Example: footnote=12px, text=14px, title=24px, etc."
+            },
+            "line-height": {
+                "title": "Line Height",
+                "semantic-desc": "It is recommended to keep consistency with font size semantics.\nExample: If the font size definition includes { \"title\": \"24px\" },\nthe corresponding line height semantic definition should be { \"title-xs\": \"24px\", \"title-sm\": \"28px\", \"title-md\": \"32px\" }",
+                "auto": {
+                    "title": "Automatically Generate Line Height Based on Font Size",
+                    "value": "Incremental Value",
+                    "value-desc": "Example: For a base font size of 14px and an incremental value of 4, the line heights generated will be 14px, 18px, 22px",
+                    "range": "Generation Range",
+                    "range-desc": "Example: [0, 2] means based on the font size (14px) and incremental value (4), generate line heights from 14 + (4 * 0) to 14 + (4 * 2), and match the semantic names in sequence: text-xs: 14px; text-sm: 18px; text-md: 22px;"
+                }
+            },
+            "weight": {
+                "title": "Font Weight",
+                "semantic-desc": "It is recommended to keep consistency with font size semantics.\nExample: If the font size definition includes { \"text\": \"14px\", \"title\": \"24px\" },\nthe corresponding font weight semantic definition should be { \"text\": \"400\", \"title\": \"700\" }"
+            }
+        },
+        "output": {}
     }
 }

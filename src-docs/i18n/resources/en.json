@@ -1,3 +1,35 @@
 {
-    "qi-design-system": "Qi Design System"
+    "common": {
+        "description": "Describe a design system and output multiple sets of framework configurations (Tailwind, Chakra UI, Ant Design, etc.).",
+        "add": "Add"
+    },
+    "navbar": {
+        "home": "Home",
+        "create": "Create",
+        "docs": "Documentation"
+    },
+    "design-system": {
+        "_": "Design System",
+        "space": "Space System",
+        "color": "Color System",
+        "font": "Typography System"
+    },
+    "home": {
+        "title-build-bridge": "Build a bridge to connect",
+        "title-designer-and-developer": "Designer & Developer",
+
+        "btn-create-design-system": "Create Design System",
+        "btn-create-design-system-desc": "Quickly create design system configuration JSON using a visual interface",
+        "btn-documentation": "View Documentation"
+    },
+    "editor": {
+        "save-config-to-local": "Save Configuration to Local",
+        "load-config-from-local": "Load Local Configuration",
+        "load-config-from-example": "Load Example Configuration",
+
+        "tabs": {
+            "design-docs": "Deisgn Docs",
+            "developer": "Developer"
+        }
+    }
 }
