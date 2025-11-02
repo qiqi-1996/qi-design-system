@@ -1,9 +1,9 @@
-import { Select, UnstyledButton } from "@mantine/core"
+import { ActionIcon, Divider, Select, UnstyledButton } from "@mantine/core"
 import type { ComponentProps, ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
 import cs from "classnames"
-import { LuLanguages } from "react-icons/lu"
+import { LuGithub, LuLanguages } from "react-icons/lu"
 
 export function ActiveBar(props: { children: ReactNode; activated: boolean }) {
     return (
@@ -29,6 +29,15 @@ export function AppNavbar(props: ComponentProps<"div">) {
             </div>
 
             <div className="flex items-center gap-2">
+                <ActionIcon
+                    variant="default"
+                    size={"lg"}
+                    onClick={() => {
+                        window.open("https://github.com/qiqi-1996/qi-design-system")
+                    }}
+                >
+                    <LuGithub />
+                </ActionIcon>
                 <Select
                     className="w-[120px]"
                     leftSection={<LuLanguages />}
@@ -43,6 +52,7 @@ export function AppNavbar(props: ComponentProps<"div">) {
                         { label: "English", value: "en" },
                     ]}
                 />
+                <Divider className="mx-2" orientation="vertical" />
                 <ActiveBar activated={pathname === "/"}>
                     <UnstyledButton onClick={() => navigate("/")}>{t("navbar.home")}</UnstyledButton>
                 </ActiveBar>

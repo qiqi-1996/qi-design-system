@@ -3,9 +3,12 @@ import { useTranslation } from "react-i18next"
 
 import { Badge, Button, Divider } from "@mantine/core"
 import { pkg } from "@/utils/resources"
+import { useNavigate } from "react-router-dom"
+import { LuGithub } from "react-icons/lu"
 
 export default function () {
     const [t] = useTranslation()
+    const navigate = useNavigate()
 
     return (
         <AppPage>
@@ -20,8 +23,17 @@ export default function () {
                     </p>
 
                     <div className="mt-5 flex items-center gap-1">
-                        <Button>{t("home.btn-create-design-system")}</Button>
-                        <Button variant="default">{t("home.btn-documentation")}</Button>
+                        <Button onClick={() => navigate("/create")}>{t("home.btn-create-design-system")}</Button>
+                        <Button variant="default" onClick={() => navigate("/docs")}>
+                            {t("home.btn-documentation")}
+                        </Button>
+                        <Button
+                            variant="default"
+                            onClick={() => window.open("https://github.com/qiqi-1996/qi-design-system")}
+                            leftSection={<LuGithub />}
+                        >
+                            GitHub
+                        </Button>
                         <Divider className="mx-2" orientation="vertical" />
                         <Badge size="lg" variant="light">
                             Version {pkg.version}
