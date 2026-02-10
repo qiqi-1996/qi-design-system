@@ -3,6 +3,7 @@ import { generate } from "@ant-design/colors"
 import { toPairs } from "lodash"
 import type z from "zod"
 import { colorPaletteSchema, colorSemanticItemSchema, colorSemanticThemeSchema } from "../../schema/color"
+import { genQiDesignSystemColorsV0 } from "../qi-design-system/color-palettes-v0"
 
 /**
  * 根据颜色系统定义生成色板
@@ -32,8 +33,14 @@ export function commonGenColorPalette(paletteConfig: z.infer<ReturnType<typeof c
         fullPalettesConfig?.map((paletteConfig) => {
             if (paletteConfig.type === "ant-design") {
                 if (paletteConfig.base) {
-                    const palette = generate(paletteConfig.base)
+                    const palette = generate(paletteConfig.base, ...(paletteConfig.args ?? []))
                     return [paletteConfig.name, { primary: palette[5] ?? "", palette }]
+                }
+            }
+            if (paletteConfig.type === "qi-design-system-v0") {
+                if (paletteConfig.base) {
+                    const palette = genQiDesignSystemColorsV0(paletteConfig.base, ...(paletteConfig.args ?? []))
+                    return [paletteConfig.name, { primary: palette[6] ?? "", palette: palette }]
                 }
             }
             return [paletteConfig.name, { primary: "", palette: [] }]

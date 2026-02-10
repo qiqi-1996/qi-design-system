@@ -3,7 +3,7 @@ import { FormTitle, type FormTitleProps } from "@/components/form/form-title"
 import type { UnifiedFormProps } from "@/components/form/types"
 import type { ColorConfig, ColorSemanticItemConfig } from "@core"
 import { commonGenColorPalette, isColorVariable } from "@core"
-import { Button, ColorInput, ColorSwatch, Input, Popover, Radio, Select, Tabs } from "@mantine/core"
+import { Button, ColorInput, ColorSwatch, Input, NativeSelect, Popover, Tabs } from "@mantine/core"
 import { fromPairs, isEmpty, omit, toPairs } from "lodash"
 import { useCallback, type ComponentProps } from "react"
 import { LuCircleHelp } from "react-icons/lu"
@@ -66,12 +66,12 @@ export function SemanticFormInput(
     return (
         <div className="flex flex-col gap-2">
             <FormTitle description="语义化风格">
-                <Select
+                <NativeSelect
                     value={value?.type}
-                    onChange={(type) =>
+                    onChange={(evt) =>
                         onChange({
                             // ...value,
-                            type: type as any,
+                            type: evt.currentTarget.value as any,
                         })
                     }
                     data={[

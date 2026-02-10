@@ -5,7 +5,7 @@ import { genSpace } from "./space"
 import { genFont } from "./font"
 
 export function genTailwindV4(
-    data: z.infer<typeof designSystemSchema>,
+    data: z.infer<ReturnType<typeof designSystemSchema>>,
     options?: {
         noTheme?: boolean
     },

@@ -6,7 +6,9 @@ Describe the design system once and output multiple framework configs (Tailwind,
 
 Languages: [中文](./README.zh-cn.md) | [English](./README.md)
 
-## Quick Start
+## Documentation
+
+[https://qiqi-1996.github.io/qi-design-system](https://qiqi-1996.github.io/qi-design-system)
 
 ## Features & Roadmap
 
@@ -15,6 +17,7 @@ Languages: [中文](./README.zh-cn.md) | [English](./README.md)
 - [ ] Color System
   - [ ] Single-color Palette Generation
     - [x] Ant Design Color
+    - [x] Qi Design System V0
     - [ ] Mantine Colors Generator
   - [ ] Triadic Color Scheme
   - [x] Semantic Definition (Based on Chakra UI Semantic Specifications)
@@ -34,7 +37,7 @@ Languages: [中文](./README.zh-cn.md) | [English](./README.md)
 - [ ] Tailwind V3
 - [ ] Ant Design
 - [ ] Chakra UI
-- [ ] Mantine
+- [x] Mantine
 
 ## Contribution
 

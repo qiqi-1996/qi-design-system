@@ -26,7 +26,7 @@ export function SectionColor(props: { colorConfig?: ColorConfig }) {
                         <div className="grid grid-cols-10 gap-1">
                             {palette.map((color, index) => (
                                 <Paper
-                                    key={color}
+                                    key={index}
                                     className={cs(
                                         "relative !flex flex-col items-center gap-1 overflow-hidden pt-2",
                                         color === primary && "!border-2 !border-primary",
@@ -71,7 +71,7 @@ export function SectionColor(props: { colorConfig?: ColorConfig }) {
                                 withBorder
                             >
                                 <ColorSwatch color={colorValue!} size={48} />
-                                <div className="flex flex-col gap-1 items-center">
+                                <div className="flex flex-col items-center gap-1">
                                     <span className="text-text leading-text-xs font-text">{semanticKey}</span>
                                     <span className="text-footnote leading-footnote-xs font-footnote text-color-footnote">
                                         {semanticValue}

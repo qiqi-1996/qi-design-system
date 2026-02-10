@@ -11,8 +11,8 @@ export const colorPaletteSchema = () =>
             .discriminatedUnion("type", [
                 z.object({
                     type: z
-                        .union([z.literal("ant-design")])
-                        .default("ant-design")
+                        .union([z.literal("ant-design"), z.literal("qi-design-system-v0")])
+                        .default("qi-design-system-v0")
                         .meta({
                             title: t("schema.color.type.title"),
                             description: t("schema.color.type.desc"),
@@ -170,6 +170,7 @@ export const colorSchema = () =>
                 .optional()
                 .meta({
                     title: t("schema.color.title"),
+                    description: t("schema.color.desc"),
                 }),
             semantic: colorSemanticThemeSchema()
                 .optional()

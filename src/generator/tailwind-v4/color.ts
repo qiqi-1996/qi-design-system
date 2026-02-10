@@ -9,14 +9,12 @@ export function genColor(colorConfig: z.infer<typeof colorSchema>) {
     const fullSemantic = commonGenColorSemantic(fullColorConfig.semantic ?? {})
 
     return [
-        fullPalette.map(([name, data]) => {
-            return [
-                `--color-${name}: ${data.primary};`,
-                data.palette.map((c, i) => `--color-${name}-${(i + 1) * 100}: ${c};`).join("\n"),
-            ].join("\n")
-        }),
-        fullSemantic
-            .map(([name, value]) => `--color-${name}: ${isColorVariable(value) ? `var(--color-${value});` : value};`)
-            .join("\n"),
+        ...fullPalette.flatMap(([name, data]) => [
+            `--color-${name}: ${data.primary};`,
+            ...data.palette.map((c, i) => `--color-${name}-${(i + 1) * 100}: ${c};`),
+        ]),
+        ...fullSemantic.map(
+            ([name, value]) => `--color-${name}: ${isColorVariable(value) ? `var(--color-${value});` : value};`,
+        ),
     ].join("\n")
 }

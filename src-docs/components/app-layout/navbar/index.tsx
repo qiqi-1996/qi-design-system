@@ -1,4 +1,4 @@
-import { ActionIcon, Divider, Select, UnstyledButton } from "@mantine/core"
+import { ActionIcon, Divider, NativeSelect, Select, UnstyledButton } from "@mantine/core"
 import type { ComponentProps, ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -38,14 +38,13 @@ export function AppNavbar(props: ComponentProps<"div">) {
                 >
                     <LuGithub />
                 </ActionIcon>
-                <Select
+                <NativeSelect
                     className="w-[120px]"
                     leftSection={<LuLanguages />}
                     size="sm"
-                    checkIconPosition="right"
                     value={i18n.language}
-                    onChange={(lang) => {
-                        i18n.changeLanguage(lang as any)
+                    onChange={(evt) => {
+                        i18n.changeLanguage(evt.currentTarget.value)
                     }}
                     data={[
                         { label: "简体中文", value: "zh-CN" },

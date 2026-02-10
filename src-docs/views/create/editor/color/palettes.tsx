@@ -2,12 +2,16 @@ import { ArrayedForm } from "@/components/form/arrayed-form"
 import { FormTitle } from "@/components/form/form-title"
 import type { UnifiedFormProps } from "@/components/form/types"
 import type { ColorConfig } from "@core/schema"
-import { ColorInput, Input, Select } from "@mantine/core"
+import { ColorInput, Input, NativeSelect } from "@mantine/core"
 import { useControllableValue } from "ahooks"
 import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 
 const colorPaletteTypes = [
+    {
+        label: "Qi Design System V0",
+        value: "qi-design-system-v0",
+    },
     {
         label: "Ant Design",
         value: "ant-design",
@@ -35,15 +39,15 @@ export function EditColorPalettes(props: UnifiedFormProps<ColorConfig["palettes"
                     ></Input>
                 </FormTitle>
                 <FormTitle title={tc("schema.color.type.title")} description={tc("schema.color.type.desc")}>
-                    <Select
+                    <NativeSelect
                         variant="filled"
                         value={state.type}
-                        onChange={(value) =>
+                        onChange={(evt) => {
                             setState({
                                 ...state,
-                                type: value as any,
+                                type: evt.currentTarget.value as any,
                             })
-                        }
+                        }}
                         data={colorPaletteTypes}
                     />
                 </FormTitle>
@@ -59,6 +63,32 @@ export function EditColorPalettes(props: UnifiedFormProps<ColorConfig["palettes"
                         }
                     />
                 </FormTitle>
+
+                {state.type === "qi-design-system-v0" && (
+                    <FormTitle title="色板类型">
+                        <NativeSelect
+                            variant="filled"
+                            value={state.args?.[0]}
+                            data={[
+                                {
+                                    label: "Light",
+                                    value: "light",
+                                },
+                                {
+                                    label: "Dark",
+                                    value: "dark",
+                                },
+                            ]}
+                            defaultValue={"light"}
+                            onChange={(evt) =>
+                                setState({
+                                    ...state,
+                                    args: [evt.currentTarget.value],
+                                })
+                            }
+                        />
+                    </FormTitle>
+                )}
             </div>
         )
     }, [])

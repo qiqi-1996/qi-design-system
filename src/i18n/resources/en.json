@@ -19,6 +19,7 @@
         },
         "color": {
             "title": "Define Color System",
+            "desc": "Note the order: the first color will be used as the primary color.",
             "type": {
                 "title": "Color Harmony",
                 "desc": "The method used to generate the color palette"

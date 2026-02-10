@@ -2,10 +2,11 @@ import { formatCode } from "../helper/format"
 import { genTailwindV4 } from "../generator/tailwind-v4"
 import { designSystemCliSchema } from "../schema"
 import fs from "node:fs/promises"
+import { genMantine } from "@core/generator/mantine"
 
 export async function emitFile(filePath: string, content: string) {
     await fs
-        .writeFile(filePath, await formatCode(content))
+        .writeFile(filePath, content)
         .then(() => {
             console.log(`✅ Generated at '${filePath}'`)
         })
@@ -24,9 +25,13 @@ export async function generateContent(configPath: string) {
     if (!file) return
     const system = designSystemCliSchema().parse(JSON.parse((await file.readFile()).toString()) ?? {})
     await file.close()
-    if (system.output?.["tailwind-v4"]) {
-        const outputPath = system.output["tailwind-v4"]
-        const result = genTailwindV4(system)
-        await emitFile(outputPath, result)
+    for (let output of system.output ?? []) {
+        if (output.type === "tailwind-v4") {
+            const result = await formatCode(genTailwindV4(system))
+            await emitFile(output.path, result)
+        } else if (output.type === "mantine") {
+            const result = genMantine(system)
+            await emitFile(output.path, result)
+        }
     }
 }

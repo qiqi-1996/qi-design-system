@@ -1,6 +1,15 @@
 import z from "zod"
 
 export const outputSchema = () =>
-    z.record(z.union([z.literal("tailwind-v4")]), z.string().meta({ title: "文件输出位置" })).meta({
-        title: "输出配置",
-    })
+    z
+        .array(
+            z.object({
+                type: z
+                    .union([z.literal("tailwind-v4"), z.literal("mantine")])
+                    .meta({ title: "输出类型", description: "例如：./src" }),
+                path: z.string().meta({ title: "输出位置", description: "例如：./src/theme.css" }),
+            }),
+        )
+        .meta({
+            title: "输出配置",
+        })

@@ -1,9 +1,9 @@
 import { ArrayedForm, ArrayedKeyValuePairsItemRender, FormTitle, type UnifiedFormProps } from "@/components/form"
 import { fontSchema, type FontConfig } from "@core"
-import { Accordion, Input, NumberInput, Paper, Select } from "@mantine/core"
+import { Accordion, Input, NativeSelect, NumberInput, Paper } from "@mantine/core"
+import { produce } from "immer"
 import { fromPairs, toPairs } from "lodash"
 import { useTranslation } from "react-i18next"
-import { produce } from "immer"
 import type { DeepRequired } from "ts-essentials"
 
 const defaultValue = fontSchema().parse({})
@@ -157,9 +157,9 @@ export function FontWeightItemRender(props: UnifiedFormProps<[key: string, value
                 value={key}
                 onChange={({ currentTarget: { value: newKey } }) => onChange([newKey, value])}
             ></Input>
-            <Select
+            <NativeSelect
                 value={value}
-                onChange={(newValue) => onChange([key, newValue])}
+                onChange={(evt) => onChange([key, evt.currentTarget.value])}
                 data={["100", "200", "300", "400", "500", "600", "700", "800", "900"]}
             />
         </div>
