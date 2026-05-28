@@ -148,6 +148,8 @@ npx qi-design-system --config /path/to/design-system.json
 - `default`: 默认主题
 - `dark`: 暗色主题。未配置时表示暗色主题和默认主题一致，不额外生成暗色变量。
 
+暗色主题变量会在原语义名前增加 `dark-` 前缀，例如 `primary-solid` 的暗色变量为 `dark-primary-solid`。
+
 ### Chakra 风格语义
 
 `type: "chakra"` 会基于一个色板位置生成常用语义变量：

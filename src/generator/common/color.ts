@@ -94,9 +94,9 @@ export function commonGenColorSemantic(
             }
         }
 
-        themeName = themeName === "default" ? "" : `-${themeName}`
+        const semanticNameWithTheme = themeName === "default" ? semanticName : `${themeName}-${semanticName}`
         return [
-            ...(baseColorValue ? [[`${semanticName}${themeName}`, baseColorValue]] : []),
+            ...(baseColorValue ? [[semanticNameWithTheme, baseColorValue]] : []),
             ...(baseColorPaletteName
                 ? toPairs(semanticConfig)
                       .filter(
@@ -105,7 +105,7 @@ export function commonGenColorSemantic(
                       )
                       .map(([semanticKey, colorValue]) => {
                           return [
-                              `${semanticName}${themeName}-${semanticKey}`,
+                              `${semanticNameWithTheme}-${semanticKey}`,
                               isColorVariable(colorValue as string)
                                   ? colorValue
                                   : `${baseColorPaletteName}-${colorValue ?? "600"}`,
@@ -118,7 +118,9 @@ export function commonGenColorSemantic(
     return toPairs(fullSemanticConfig)
         .map(([semanticName, semanticConfig]) => {
             return [
-                ...processThemeAndSemanticConfig("default", semanticName, semanticConfig.default),
+                ...(semanticConfig.default
+                    ? processThemeAndSemanticConfig("default", semanticName, semanticConfig.default)
+                    : []),
                 ...(semanticConfig.dark
                     ? processThemeAndSemanticConfig("dark", semanticName, semanticConfig.dark)
                     : []),

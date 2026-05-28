@@ -11,6 +11,7 @@ import { DesignSystemPreview } from "./preview"
 export default function () {
     const [designSystemConfig, setDesignSystemConfig] = useState<DesignSystemConfig>({})
     const [designSystemFlags, setDesignSystemFlags] = useState<DesignSystemFlags>({
+        output: false,
         space: false,
         color: false,
         font: false,

@@ -11,6 +11,7 @@ export * from "./font"
 
 export const designSystemSchema = () =>
     z.object({
+        output: z.optional(outputSchema()),
         color: z.optional(colorSchema()),
         space: z.optional(spaceSchema()),
         font: z.optional(fontSchema()),
@@ -22,6 +23,5 @@ export const designSystemCliSchema = () =>
     z.object({
         // To make VSCode happy.
         $schema: z.string().optional(),
-        output: z.optional(outputSchema()),
         ...designSystemSchema().shape,
     })

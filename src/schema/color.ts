@@ -127,21 +127,9 @@ export const colorSemanticThemeSchema = () =>
          */
         z.string(),
         z.object({
-            default: colorSemanticItemSchema()
-                .optional()
-                .default({
-                    type: "chakra",
-                    base: "100",
-                    solid: "100",
-                    contrast: "100",
-                    fg: "200",
-                    muted: "300",
-                    subtle: "400",
-                    emphasized: "500",
-                })
-                .meta({
-                    title: "配色模式：默认",
-                }),
+            default: colorSemanticItemSchema().optional().meta({
+                title: "配色模式：默认",
+            }),
             dark: colorSemanticItemSchema().optional().meta({
                 title: "配色模式：暗黑模式",
             }),

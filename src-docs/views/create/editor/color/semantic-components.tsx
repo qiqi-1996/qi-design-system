@@ -67,14 +67,13 @@ export function SemanticFormInput(
         <div className="flex flex-col gap-2">
             <FormTitle description="语义化风格">
                 <NativeSelect
-                    value={value?.type}
-                    onChange={(evt) =>
-                        onChange({
-                            // ...value,
-                            type: evt.currentTarget.value as any,
-                        })
-                    }
+                    value={value?.type ?? ""}
+                    onChange={(evt) => {
+                        const type = evt.currentTarget.value
+                        onChange(type ? { type: type as any } : undefined)
+                    }}
                     data={[
+                        { label: "无", value: "" },
                         { label: "Chakra 风格", value: "chakra" },
                         { label: "自定义", value: "custom" },
                     ]}

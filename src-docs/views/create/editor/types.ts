@@ -6,6 +6,7 @@ export type DesignSystemEditorValue = {
 }
 
 export type DesignSystemFlags = {
+    output: boolean
     space: boolean
     color: boolean
     font: boolean

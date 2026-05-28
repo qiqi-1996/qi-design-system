@@ -30,7 +30,8 @@
         "tabs": {
             "design-docs": "Design Docs",
             "config-file": "Config File",
-            "tailwind": "Tailwind"
+            "tailwind": "Tailwind",
+            "mantine": "Mantine"
         }
     }
 }

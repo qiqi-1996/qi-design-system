@@ -27,7 +27,12 @@ export async function generateContent(configPath: string) {
     await file.close()
     for (let output of system.output ?? []) {
         if (output.type === "tailwind-v4") {
-            const result = await formatCode(genTailwindV4(system))
+            const result = await formatCode(
+                genTailwindV4(system, {
+                    disableDefault: output.disableDefault,
+                    darkClass: output.darkClass,
+                }),
+            )
             await emitFile(output.path, result)
         } else if (output.type === "mantine") {
             const result = genMantine(system)

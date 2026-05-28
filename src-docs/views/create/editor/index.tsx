@@ -4,12 +4,13 @@ import cs from "classnames"
 import { assign, omit } from "lodash"
 import type { ComponentProps } from "react"
 import { useTranslation } from "react-i18next"
-import { LuLayoutDashboard, LuSwatchBook, LuText } from "react-icons/lu"
+import { LuFileOutput, LuLayoutDashboard, LuSwatchBook, LuText } from "react-icons/lu"
 import type { DeepPartial } from "ts-essentials"
 import { EditColor } from "./color"
 import EditSpace from "./space"
 import type { DesignSystemEditorValue } from "./types"
 import EditFont from "./font"
+import EditOutput from "./output"
 import { useFileDialog } from "@mantine/hooks"
 import { designSystemSchema } from "@core/schema"
 import saveFile from "save-file"
@@ -42,6 +43,7 @@ export function DesignSystemEditor(
             props.onChange({
                 config,
                 flags: {
+                    output: !!config.output,
                     space: !!config.space,
                     color: !!config.color,
                     font: !!config.font,
@@ -77,6 +79,7 @@ export function DesignSystemEditor(
                     props.onChange({
                         config: config as any,
                         flags: {
+                            output: !!config.output,
                             space: !!config.space,
                             color: !!config.color,
                             font: !!config.font,
@@ -89,6 +92,32 @@ export function DesignSystemEditor(
 
             <Accordion className="w-full" variant="contained">
                 <Accordion.Item value="0">
+                    <Accordion.Control icon={<LuFileOutput />}>
+                        <div className="flex w-full items-center justify-between pr-2">
+                            输出配置
+                            <Switch
+                                checked={flags.output}
+                                onChange={(evt) => updateValue({ flags: { output: evt.currentTarget.checked } })}
+                            />
+                        </div>
+                    </Accordion.Control>
+                    <Accordion.Panel>
+                        <EditOutput
+                            value={config.output}
+                            onChange={(output) =>
+                                updateValue({
+                                    config: {
+                                        output,
+                                    },
+                                    flags: {
+                                        output: true,
+                                    },
+                                })
+                            }
+                        />
+                    </Accordion.Panel>
+                </Accordion.Item>
+                <Accordion.Item value="1">
                     <Accordion.Control icon={<LuLayoutDashboard />}>
                         <div className="flex w-full items-center justify-between pr-2">
                             {t("design-system.space")}
@@ -114,7 +143,7 @@ export function DesignSystemEditor(
                         />
                     </Accordion.Panel>
                 </Accordion.Item>
-                <Accordion.Item value="1">
+                <Accordion.Item value="2">
                     <Accordion.Control icon={<LuSwatchBook />}>
                         <div className="flex w-full items-center justify-between pr-2">
                             {t("design-system.color")}
@@ -144,7 +173,7 @@ export function DesignSystemEditor(
                         />
                     </Accordion.Panel>
                 </Accordion.Item>
-                <Accordion.Item value="2">
+                <Accordion.Item value="3">
                     <Accordion.Control icon={<LuText />}>
                         <div className="flex w-full items-center justify-between pr-2">
                             {t("design-system.font")}

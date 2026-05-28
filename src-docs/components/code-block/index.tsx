@@ -2,6 +2,7 @@ import cs from "classnames"
 import { useEffect, useState, type ComponentProps } from "react"
 import css from "@shikijs/langs/css"
 import json from "@shikijs/langs/json"
+import typescript from "@shikijs/langs/typescript"
 import githubDarkDefault from "@shikijs/themes/github-dark-default"
 import { createOnigurumaEngine } from "shiki/engine/oniguruma"
 import { createHighlighterCore } from "shiki/core"
@@ -13,7 +14,7 @@ export type CodeBlockProps = Omit<ComponentProps<"div">, "children"> & {
 
 const highlighter = createHighlighterCore({
     themes: [githubDarkDefault],
-    langs: [json, css],
+    langs: [json, css, typescript],
     engine: createOnigurumaEngine(import("shiki/wasm")),
 })
 

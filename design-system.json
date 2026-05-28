@@ -1,21 +1,50 @@
 {
     "$schema": "./dist/schema-zh.json",
     "output": [
-        { "type": "tailwind-v4", "path": "./src-docs/theme.css" },
+        {
+            "type": "tailwind-v4",
+            "path": "./src-docs/theme.css",
+            "disableDefault": ["font-size", "leading", "weight"],
+            "darkClass": ".dark"
+        },
         { "type": "mantine", "path": "./src-docs/theme.ts" }
     ],
     "space": { "base": 8, "unit": "px" },
     "color": {
         "palette": [
             { "type": "qi-design-system-v0", "name": "brand", "base": "#002FA7" },
-            { "type": "qi-design-system-v0", "name": "danger", "base": "#F40000" }
+            { "type": "qi-design-system-v0", "name": "success", "base": "#2F7A62" },
+            { "type": "qi-design-system-v0", "name": "warning", "base": "#B97917" },
+            { "type": "qi-design-system-v0", "name": "danger", "base": "#B84A4A" },
+            { "type": "qi-design-system-v0", "name": "brand-dark", "base": "#5C7DFF", "args": ["dark"] },
+            { "type": "qi-design-system-v0", "name": "success-dark", "base": "#58A88A", "args": ["dark"] },
+            { "type": "qi-design-system-v0", "name": "warning-dark", "base": "#D8A24A", "args": ["dark"] },
+            { "type": "qi-design-system-v0", "name": "danger-dark", "base": "#D97A7A", "args": ["dark"] }
         ],
         "semantic": {
-            "primary": { "default": { "type": "chakra", "base": "brand-600" } },
-            "border": { "default": { "type": "custom", "default": "#E7E7E7" } },
-            "color-footnote": { "default": { "type": "custom", "default": "#9E9E9E" } },
-            "secondary-background": { "default": { "type": "custom", "default": "#FAFAFA" } },
-            "danger": { "default": { "type": "chakra", "base": "danger-600" } }
+            "primary": {
+                "default": { "type": "chakra", "base": "brand-600" },
+                "dark": { "type": "chakra", "base": "brand-dark-600" }
+            },
+            "success": {
+                "default": { "type": "chakra", "base": "success-600" },
+                "dark": { "type": "chakra", "base": "success-dark-600" }
+            },
+            "warning": {
+                "default": { "type": "chakra", "base": "warning-600" },
+                "dark": { "type": "chakra", "base": "warning-dark-600" }
+            },
+            "danger": {
+                "default": { "type": "chakra", "base": "danger-600" },
+                "dark": { "type": "chakra", "base": "danger-dark-600" }
+            },
+            "border": { "default": { "type": "custom", "default": "#E4E2DD" } },
+            "color-footnote": { "default": { "type": "custom", "default": "#7C7A76" } },
+            "secondary-background": { "default": { "type": "custom", "default": "#F6F3ED" } },
+            "panel": {
+                "default": { "type": "custom", "default": "#FFFFFF" },
+                "dark": { "type": "custom", "default": "#171A24" }
+            }
         }
     },
     "font": {

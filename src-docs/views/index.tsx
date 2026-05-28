@@ -76,7 +76,7 @@ export default function HomePage() {
                             <span className="text-footnote text-black/50">{page.note}</span>
                         </div>
 
-                        <h1 className="max-w-[980px] text-[48px] leading-[1.02] font-[1000] tracking-[-0.075em] text-balance sm:text-[76px] lg:text-[104px]">
+                        <h1 className="max-w-[920px] [font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[42px] leading-[1.06] font-[760] tracking-[-0.055em] text-balance sm:text-[64px] lg:text-[88px]">
                             {page.slogan}
                         </h1>
                         <p className="mt-5 max-w-[760px] text-[18px] leading-7 text-black/58 sm:text-[21px]">
