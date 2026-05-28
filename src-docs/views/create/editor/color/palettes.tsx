@@ -18,11 +18,11 @@ const colorPaletteTypes = [
     },
 ]
 
-export function EditColorPalettes(props: UnifiedFormProps<ColorConfig["palettes"]>) {
+export function EditColorPalettes(props: UnifiedFormProps<ColorConfig["palette"]>) {
     const [tc] = useTranslation("core")
 
-    const itemRender = useCallback((props: UnifiedFormProps<Exclude<ColorConfig["palettes"], undefined>[number]>) => {
-        const [state, setState] = useControllableValue<Exclude<ColorConfig["palettes"], undefined>[number]>(props)
+    const itemRender = useCallback((props: UnifiedFormProps<Exclude<ColorConfig["palette"], undefined>[number]>) => {
+        const [state, setState] = useControllableValue<Exclude<ColorConfig["palette"], undefined>[number]>(props)
 
         return (
             <div className="flex flex-col gap-3 py-1">

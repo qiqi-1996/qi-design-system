@@ -1,7 +1,7 @@
 {
     "name": "@qiqi1996/design-system",
     "description": "Describe the design system once and output multiple framework configs (Tailwind, Chakra UI, Ant Design, etc.) | 描述一次设计系统, 输出多套框架配置。",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "module": "index.ts",
     "type": "module",
     "publishConfig": {
@@ -37,6 +37,7 @@
         "del-cli": "^7.0.0",
         "make-dir-cli": "^4.0.0",
         "prettier-plugin-tailwindcss": "^0.7.1",
+        "remark-gfm": "^4.0.1",
         "vite-plugin-pages": "^0.33.1"
     },
     "dependencies": {
@@ -63,6 +64,7 @@
         "react-json-view-lite": "^2.5.0",
         "react-router-dom": "^7.9.4",
         "save-file": "^2.3.1",
+        "shiki": "^4.1.0",
         "tailwindcss": "^4.1.13",
         "ts-essentials": "^10.1.1",
         "typescript": "~5.8.3",

@@ -2,79 +2,291 @@ import { ExampleDesignSystemConfig, GotoDesignSystemEditor } from "../../compone
 
 # Overview
 
-Describe a design system and output multiple sets of framework configurations (Tailwind, Chakra UI, Ant Design, etc.).
+Qi Design System is an open-source design-system configuration generator. Describe spacing, colors and typography once in `design-system.json`, then use the CLI to generate Tailwind v4 theme CSS and Mantine theme files.
+
+It is built for teams that need design tokens to stay consistent across frontend libraries. The config can live in your repository and generated artifacts can be versioned with your application.
 
 # Quick Start
 
-1. Install Dependencies
+1. Install the package
 
-```
+```bash
 npm install @qiqi1996/design-system
 ```
 
-2. Create the design system description file `design-system.json`
+2. Create `design-system.json`
 
 <ExampleDesignSystemConfig />
 
-3. Configure Output Location
+3. Generate output files
 
-Modify the `output` field in `design-system.json` to meet project requirements. The example above indicates: Build the design system configuration in the form of tailwind-v4 and output it to the `./src-docs/theme.css` file.
-
-4. Build Configuration
-
-```
+```bash
 npx qi-design-system --config /path/to/design-system.json
 ```
 
-The command line will automatically retrieve the `design-system.json` in the project root directory, so the `--config` parameter can be omitted.
+The CLI reads `design-system.json` from the project root by default, so `--config` can usually be omitted.
 
 # Configuration
 
-Most configurations can be set up and previewed using our visual editor. The following documentation is only recommended for users who configure manually.
+Most values can be configured and previewed in the visual editor. This document is intended for users who write JSON manually or integrate the CLI into a build pipeline.
 
 <GotoDesignSystemEditor />
 
 ## Schema
 
-These are mainly JSON support features for editors to enhance intelligent prompts for fields. `Qi Design System` provides multi-language Schema files for use. Currently, the multi-language versions we offer are:
+`$schema` enables field hints and validation in editors such as VSCode. The package provides multilingual JSON Schema files:
 
 - `schema-zh.json`: Simplified Chinese
 - `schema-en.json`: English
 
-### Example
-
-```
+```json
 {
-    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json",
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-en.json"
 }
 ```
 
-## Output
+## Full Structure
 
-Define the type of configuration to output and where to output the configuration. Currently supported output types are:
-
-- tailwind-v4: Theme configuration for Tailwind V4 version
-
-The output location can use a relative path, relative to the location of the design system configuration json file.
-
-### Format
-
-```
+```json
 {
-    "output": {
-        "Output Type": "Output Location"
+    "output": [],
+    "space": {},
+    "color": {
+        "palette": [],
+        "semantic": {}
+    },
+    "font": {
+        "semantic": {}
     }
 }
 ```
 
-### Example
+All system fields are optional. If you configure only `color`, only color variables are generated. If you configure only `font`, only typography variables are generated.
 
-Output the design system as the theme configuration of `Tailwind v4` and save it to `./src-docs/theme.css`
+## output
 
-```
+`output` defines generation targets. It is an array of objects with an output type and path.
+
+| Field  | Type                       | Description      |
+| ------ | -------------------------- | ---------------- |
+| `type` | `tailwind-v4` or `mantine` | Generator type   |
+| `path` | `string`                   | Output file path |
+
+```json
 {
-    "output": {
-        "tailwind-v4": "./src-docs/theme.css"
+    "output": [
+        { "type": "tailwind-v4", "path": "./src/theme.css" },
+        { "type": "mantine", "path": "./src/theme.ts" }
+    ]
+}
+```
+
+Generated output:
+
+- `tailwind-v4`: writes `@theme { ... }` CSS that Tailwind v4 can read directly.
+- `mantine`: writes a `createTheme(...)` theme file.
+
+## space
+
+`space` defines the spacing system. It currently generates Tailwind's `--spacing` variable.
+
+| Field  | Type     | Description                     |
+| ------ | -------- | ------------------------------- |
+| `base` | `number` | Base spacing value              |
+| `unit` | `string` | Unit, for example `px` or `rem` |
+
+```json
+{
+    "space": { "base": 8, "unit": "px" }
+}
+```
+
+Generated CSS:
+
+```css
+--spacing: 8px;
+```
+
+## color.palette
+
+`color.palette` defines color palettes. Each palette generates `--color-{name}` and `--color-{name}-100` through `--color-{name}-1000`.
+
+| Field  | Type                                  | Description                                               |
+| ------ | ------------------------------------- | --------------------------------------------------------- |
+| `type` | `ant-design` or `qi-design-system-v0` | Palette generation algorithm                              |
+| `name` | `string`                              | Palette name, for example `brand`, `danger`, `brand-dark` |
+| `base` | `string`                              | Base color                                                |
+| `args` | `array`                               | Extra arguments passed to the palette generator           |
+
+```json
+{
+    "color": {
+        "palette": [
+            { "type": "ant-design", "name": "brand", "base": "#002FA7" },
+            { "type": "ant-design", "name": "brand-dark", "base": "#0048ff" },
+            { "type": "ant-design", "name": "danger", "base": "#a70000" }
+        ]
+    }
+}
+```
+
+Example variables:
+
+```css
+--color-brand: #0034b8;
+--color-brand-100: #ffffff;
+--color-brand-600: #0040e0;
+--color-brand-dark-600: #2f6bff;
+```
+
+## color.semantic
+
+`color.semantic` defines semantic colors. The key becomes the semantic variable name, for example `primary`, `danger` or `border`.
+
+Each semantic entry can contain:
+
+- `default`: default theme
+- `dark`: dark theme. If omitted, the semantic color is shared by light and dark themes.
+
+### Chakra-style Semantic Colors
+
+`type: "chakra"` generates common semantic variables from one palette position:
+
+- `{name}`: equivalent to `{name}-solid`
+- `{name}-solid`
+- `{name}-contrast`
+- `{name}-fg`
+- `{name}-muted`
+- `{name}-subtle`
+- `{name}-emphasized`
+
+```json
+{
+    "color": {
+        "semantic": {
+            "primary": {
+                "default": { "type": "chakra", "base": "brand-600" },
+                "dark": { "type": "chakra", "base": "brand-dark-600" }
+            }
+        }
+    }
+}
+```
+
+`base` decides which palette the semantic variables are based on. When other fields use steps such as `100` or `200`, the palette name is inferred from `base`.
+
+```json
+{
+    "danger": {
+        "default": {
+            "type": "chakra",
+            "base": "danger-600",
+            "contrast": "danger-100",
+            "fg": "danger-200",
+            "muted": "danger-300",
+            "subtle": "danger-400",
+            "emphasized": "danger-500"
+        }
+    }
+}
+```
+
+### Custom Semantic Colors
+
+`type: "custom"` is suitable for borders, backgrounds and supporting text colors that do not need palette-step inference.
+
+```json
+{
+    "color": {
+        "semantic": {
+            "border": { "default": { "type": "custom", "default": "#E7E7E7" } },
+            "secondary-background": { "default": { "type": "custom", "default": "#FAFAFA" } }
+        }
+    }
+}
+```
+
+## font.semantic
+
+`font.semantic` defines the typography system. The key becomes the semantic name, for example `footnote`, `text`, `subtitle` or `title`.
+
+| Field        | Type                                   | Description                                               |
+| ------------ | -------------------------------------- | --------------------------------------------------------- |
+| `size`       | `string`                               | Font size, generates `--text-{name}`                      |
+| `lineHeight` | `string[]` or `Record<string, string>` | Line heights, supports absolute values and `+Npx` offsets |
+| `weight`     | `100` to `900`                         | Font weight, generates `--font-weight-{name}`             |
+
+```json
+{
+    "font": {
+        "semantic": {
+            "footnote": {
+                "size": "12px",
+                "lineHeight": ["+0px", "+4px", "+8px"],
+                "weight": "400"
+            },
+            "text": {
+                "size": "14px",
+                "lineHeight": ["14px", "18px", "22px"],
+                "weight": "400"
+            },
+            "subtitle": {
+                "size": "16px",
+                "lineHeight": {
+                    "my-xs": "+0px",
+                    "my-sm": "+4px",
+                    "my-md": "+8px"
+                },
+                "weight": "500"
+            },
+            "title": {
+                "size": "24px",
+                "weight": "600"
+            }
+        }
+    }
+}
+```
+
+Array syntax generates aliases in order: `xs`, `sm`, `md`, `lg`, `xl`, etc.
+
+```css
+--text-footnote: 12px;
+--leading-footnote-xs: 12px;
+--leading-footnote-sm: 16px;
+--leading-footnote-md: 20px;
+--font-weight-footnote: 400;
+```
+
+Object syntax uses custom aliases:
+
+```css
+--leading-subtitle-my-xs: 16px;
+--leading-subtitle-my-sm: 20px;
+--leading-subtitle-my-md: 24px;
+```
+
+## Complete Example
+
+```json
+{
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-en.json",
+    "output": [
+        { "type": "tailwind-v4", "path": "./src/theme.css" },
+        { "type": "mantine", "path": "./src/theme.ts" }
+    ],
+    "space": { "base": 8, "unit": "px" },
+    "color": {
+        "palette": [{ "type": "ant-design", "name": "brand", "base": "#002FA7" }],
+        "semantic": {
+            "primary": { "default": { "type": "chakra", "base": "brand-600" } }
+        }
+    },
+    "font": {
+        "semantic": {
+            "text": { "size": "14px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "400" },
+            "title": { "size": "24px", "weight": "600" }
+        }
     }
 }
 ```

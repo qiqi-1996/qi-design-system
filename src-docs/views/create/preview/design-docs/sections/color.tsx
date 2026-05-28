@@ -11,7 +11,7 @@ export function SectionColor(props: { colorConfig?: ColorConfig }) {
     const [tc] = useTranslation("core")
 
     const color = {
-        palettes: commonGenColorPalette(props.colorConfig?.palettes),
+        palettes: commonGenColorPalette(props.colorConfig?.palette),
         semantics: commonGenColorSemantic(props.colorConfig?.semantic),
     }
 

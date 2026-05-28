@@ -10,11 +10,11 @@ export function EditColor(props: UnifiedFormProps<ColorConfig | undefined>) {
     return (
         <div className="flex flex-col gap-2">
             <EditColorPalettes
-                value={state?.palettes ?? []}
-                onChange={(palettes) =>
+                value={state?.palette ?? []}
+                onChange={(palette) =>
                     setState({
                         ...state,
-                        palettes,
+                        palette,
                     })
                 }
             />
@@ -26,7 +26,7 @@ export function EditColor(props: UnifiedFormProps<ColorConfig | undefined>) {
                         semantic: toColorConfigSemantic(value),
                     })
                 }
-                colorPalettesConfig={state?.palettes}
+                colorPalettesConfig={state?.palette}
             />
         </div>
     )

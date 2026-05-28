@@ -13,7 +13,7 @@ type SemanticItemValue = [key: string, value: string]
 function SemanticItemValueInput(
     props: UnifiedFormProps<SemanticItemValue | undefined> & {
         title?: FormTitleProps
-        colorPalettesConfig: ColorConfig["palettes"]
+        colorPalettesConfig: ColorConfig["palette"]
     },
 ) {
     const { title, value: [key, value = ""] = [], onChange, colorPalettesConfig } = props
@@ -38,7 +38,7 @@ function SemanticItemValueInput(
 }
 
 export function SemanticFormInput(
-    props: UnifiedFormProps<ColorSemanticItemConfig | undefined> & { colorPalettesConfig: ColorConfig["palettes"] },
+    props: UnifiedFormProps<ColorSemanticItemConfig | undefined> & { colorPalettesConfig: ColorConfig["palette"] },
 ) {
     const { value, onChange, colorPalettesConfig } = props
 
@@ -83,8 +83,9 @@ export function SemanticFormInput(
 
             {value?.type === "chakra" && (
                 <div className="flex flex-col gap-0.5">
+                    <SemanticItemValueInput {...staticItemBind("base")} />
                     <SemanticItemValueInput {...staticItemBind("solid")} />
-                    <SemanticItemValueInput {...staticItemBind("constract")} />
+                    <SemanticItemValueInput {...staticItemBind("contrast")} />
                     <SemanticItemValueInput {...staticItemBind("fg")} />
                     <SemanticItemValueInput {...staticItemBind("muted")} />
                     <SemanticItemValueInput {...staticItemBind("subtle")} />
@@ -121,14 +122,14 @@ export function SemanticFormInput(
  */
 export function SemanticPalettePickerAndInput(
     props: UnifiedFormProps<string> & {
-        colorPalettesConfig: ColorConfig["palettes"]
+        colorPalettesConfig: ColorConfig["palette"]
     },
 ) {
     const palettes = commonGenColorPalette(props.colorPalettesConfig)
 
     const colorFromPalettes = (colorId: string) =>
-        palettes.find(([colorName]) => colorName === colorId.split("-")[0])?.[1].palette?.[
-            Number(colorId.split("-")[1]) / 100 - 1
+        palettes.find(([colorName]) => colorName === colorId.split("-").slice(0, -1).join("-"))?.[1].palette?.[
+            Number(colorId.split("-").at(-1)) / 100 - 1
         ]
 
     return (

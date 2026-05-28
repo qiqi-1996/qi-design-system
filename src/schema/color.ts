@@ -10,13 +10,10 @@ export const colorPaletteSchema = () =>
         z
             .discriminatedUnion("type", [
                 z.object({
-                    type: z
-                        .union([z.literal("ant-design"), z.literal("qi-design-system-v0")])
-                        .default("qi-design-system-v0")
-                        .meta({
-                            title: t("schema.color.type.title"),
-                            description: t("schema.color.type.desc"),
-                        }),
+                    type: z.union([z.literal("ant-design"), z.literal("qi-design-system-v0")]).meta({
+                        title: t("schema.color.type.title"),
+                        description: t("schema.color.type.desc"),
+                    }),
                     name: z.string().meta({
                         title: t("schema.color.palettes.name"),
                         description: t("schema.color.palettes.base-desc"),
@@ -107,7 +104,7 @@ export const colorSemanticItemSchema = () =>
     z.discriminatedUnion("type", [
         z.object({
             type: z.literal("chakra"),
-            default: chakraColorSemanticValue("600", "solid").meta({}),
+            base: colorSemanticValue().optional(),
             solid: chakraColorSemanticValue("600", "solid").meta({}),
             contrast: chakraColorSemanticValue("100", "contrast"),
             fg: chakraColorSemanticValue("200", "fg"),
@@ -134,7 +131,7 @@ export const colorSemanticThemeSchema = () =>
                 .optional()
                 .default({
                     type: "chakra",
-                    default: "100",
+                    base: "100",
                     solid: "100",
                     contrast: "100",
                     fg: "200",
@@ -145,28 +142,16 @@ export const colorSemanticThemeSchema = () =>
                 .meta({
                     title: "配色模式：默认",
                 }),
-            dark: colorSemanticItemSchema()
-                .optional()
-                .default({
-                    type: "chakra",
-                    default: "600",
-                    solid: "600",
-                    contrast: "100",
-                    fg: "200",
-                    muted: "300",
-                    subtle: "400",
-                    emphasized: "500",
-                })
-                .meta({
-                    title: "配色模式：暗黑模式",
-                }),
+            dark: colorSemanticItemSchema().optional().meta({
+                title: "配色模式：暗黑模式",
+            }),
         }),
     )
 
 export const colorSchema = () =>
     z
         .object({
-            palettes: colorPaletteSchema()
+            palette: colorPaletteSchema()
                 .optional()
                 .meta({
                     title: t("schema.color.title"),
@@ -180,7 +165,7 @@ export const colorSchema = () =>
                 }),
         })
         .default({
-            palettes: [],
+            palette: [],
         })
         .meta({ title: t("schema.color.title") })
 

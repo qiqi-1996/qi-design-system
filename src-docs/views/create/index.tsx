@@ -19,7 +19,7 @@ export default function () {
     const generated = {
         space: designSystemConfig.space,
         color: {
-            palettes: commonGenColorPalette(designSystemConfig.color?.palettes),
+            palettes: commonGenColorPalette(designSystemConfig.color?.palette),
             semantics: commonGenColorSemantic(designSystemConfig.color?.semantic),
         },
     }
@@ -42,7 +42,7 @@ export default function () {
         <AppPage noBodyPadding>
             <style>{cssVariables}</style>
             <MantineProvider theme={theme}>
-                <div className="flex h-full w-full overflow-auto pt-2">
+                <div className="flex h-full w-full pt-2">
                     <DesignSystemEditor
                         className="h-full shrink-0 overflow-auto pr-1 pb-5 pl-5"
                         value={{ config: designSystemConfig, flags: designSystemFlags }}

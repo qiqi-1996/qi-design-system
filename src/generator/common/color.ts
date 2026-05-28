@@ -73,18 +73,22 @@ export function commonGenColorSemantic(
         let baseColorPaletteName: string | undefined
 
         if (semanticConfig.type === "chakra") {
-            if (isColorVariable(semanticConfig.default)) {
-                baseColorValue = semanticConfig.default
+            if (semanticConfig.base && isColorVariable(semanticConfig.base)) {
+                baseColorValue = semanticConfig.base
             } else if (isColorVariable(semanticConfig.solid)) {
                 baseColorValue = semanticConfig.solid
             }
         }
         if (!baseColorValue) {
             baseColorValue =
-                semanticConfig.default || (semanticConfig.type === "chakra" ? semanticConfig.solid : undefined)
+                semanticConfig.type === "chakra"
+                    ? (semanticConfig.base ?? semanticConfig.solid)
+                    : semanticConfig.default
         }
         if (baseColorValue) {
-            baseColorPaletteName = isColorVariable(baseColorValue) ? baseColorValue.split("-")[0] : undefined
+            baseColorPaletteName = isColorVariable(baseColorValue)
+                ? baseColorValue.split("-").slice(0, -1).join("-")
+                : undefined
             if (!baseColorPaletteName && isColorPaletteKey(baseColorValue)) {
                 baseColorValue = undefined
             }
@@ -95,7 +99,10 @@ export function commonGenColorSemantic(
             ...(baseColorValue ? [[`${semanticName}${themeName}`, baseColorValue]] : []),
             ...(baseColorPaletteName
                 ? toPairs(semanticConfig)
-                      .filter(([semanticKey]) => semanticKey !== "type" && semanticKey !== "default")
+                      .filter(
+                          ([semanticKey]) =>
+                              semanticKey !== "type" && semanticKey !== "base" && semanticKey !== "default",
+                      )
                       .map(([semanticKey, colorValue]) => {
                           return [
                               `${semanticName}${themeName}-${semanticKey}`,

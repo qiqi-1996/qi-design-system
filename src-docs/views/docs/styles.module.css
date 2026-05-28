@@ -8,11 +8,11 @@
     }
 
     h2 {
-        @apply text-title leading-title-xs font-title my-2 text-primary;
+        @apply my-2 text-title leading-title-xs font-title text-primary;
     }
 
     h3 {
-        @apply text-subtitle leading-subtitle-xs font-subtitle my-2 text-primary;
+        @apply my-2 text-subtitle leading-subtitle-xs font-subtitle text-primary;
     }
 
     ul {
@@ -42,5 +42,22 @@
     }
     pre > code {
         @apply p-1;
+    }
+
+    table {
+        @apply my-2 w-full border-collapse overflow-hidden rounded-lg border border-black/10 text-left text-text;
+    }
+
+    thead {
+        @apply bg-black/5;
+    }
+
+    th,
+    td {
+        @apply border border-black/10 px-2 py-1 align-top;
+    }
+
+    th {
+        @apply font-subtitle text-primary;
     }
 }

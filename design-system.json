@@ -6,25 +6,25 @@
     ],
     "space": { "base": 8, "unit": "px" },
     "color": {
-        "palettes": [
+        "palette": [
             { "type": "qi-design-system-v0", "name": "brand", "base": "#002FA7" },
             { "type": "qi-design-system-v0", "name": "danger", "base": "#F40000" }
         ],
         "semantic": {
-            "primary": { "default": { "type": "chakra", "solid": "brand-600" } },
+            "primary": { "default": { "type": "chakra", "base": "brand-600" } },
             "border": { "default": { "type": "custom", "default": "#E7E7E7" } },
             "color-footnote": { "default": { "type": "custom", "default": "#9E9E9E" } },
             "secondary-background": { "default": { "type": "custom", "default": "#FAFAFA" } },
-            "danger": { "default": { "type": "chakra", "solid": "danger-600" } }
+            "danger": { "default": { "type": "chakra", "base": "danger-600" } }
         }
     },
     "font": {
-        "size": {
-            "semantic": { "footnote": "12px", "text": "14px", "subtitle": "16px", "title": "24px", "headline": "40px" }
-        },
-        "lineHeight": { "auto": { "value": 4, "range": [0, 3] } },
-        "weight": {
-            "semantic": { "footnote": "400", "text": "400", "subtitle": "500", "title": "600", "headline": "800" }
+        "semantic": {
+            "footnote": { "size": "12px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "400" },
+            "text": { "size": "14px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "400" },
+            "subtitle": { "size": "16px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "500" },
+            "title": { "size": "24px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "600" },
+            "headline": { "size": "40px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "800" }
         }
     }
 }

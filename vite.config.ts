@@ -1,6 +1,7 @@
 import mdx from "@mdx-js/rollup"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react-swc"
+import remarkGfm from "remark-gfm"
 import { defineConfig } from "vite"
 import pages from "vite-plugin-pages"
 
@@ -25,7 +26,7 @@ export default defineConfig({
     plugins: [
         {
             enforce: "pre",
-            ...mdx(),
+            ...mdx({ remarkPlugins: [remarkGfm] }),
         },
         tailwindcss(),
         react(),

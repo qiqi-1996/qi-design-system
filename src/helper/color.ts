@@ -7,9 +7,12 @@ export const isColorPaletteKey = (value: string): value is ColorPaletteKey =>
     colorPaletteKeySchema.options.map((item) => item.def.values[0]).includes(value as any)
 
 export const isColorVariable = (value: string): value is ColorVariable => {
-    const [name, paletteKey] = value.split("-")
+    const [paletteKey, ...nameParts] = value.split("-").reverse()
+    const name = nameParts.reverse().join("-")
     return !!name && !!paletteKey && isString(name) && isColorPaletteKey(paletteKey)
 }
 
 export const resolveColorVariable = (value: string) =>
-    !isColorVariable(value) ? undefined : { name: value.split("-")[0], index: Number(value.split("-")[1]) / 100 - 1 }
+    !isColorVariable(value)
+        ? undefined
+        : { name: value.split("-").slice(0, -1).join("-"), index: Number(value.split("-").at(-1)) / 100 - 1 }

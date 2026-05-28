@@ -1,26 +1,31 @@
 import { sizeSemantic } from "@core/helper/size-semantic"
 import { unit, withoutUnit } from "@core/helper/values"
 import { fontSchema, type FontConfig } from "@core/schema/font"
-import { toPairs } from "lodash"
+import { isArray, toPairs } from "lodash"
 
 export function commonGenFont(fontConfig?: FontConfig) {
     const fullFontConfig = fontSchema().parse(fontConfig ?? {})
 
-    const size = fullFontConfig.size?.semantic ?? {}
-    const weight = fullFontConfig.weight?.semantic ?? {}
-    let lineHeight = fullFontConfig.lineHeight?.semantic ?? {}
-
-    const auto = fullFontConfig.lineHeight?.auto
-    if (auto) {
-        const step = auto.value ?? 4
-        const [begin, end] = auto.range || [0, 0]
-        const stepped = [...new Array(end - begin + 1)].map((_, idx) => (idx + begin) * step)
-        toPairs(size).forEach(([key, value]) => {
-            stepped.forEach((step, idx) => {
-                lineHeight[`${key}-${sizeSemantic(idx)}`] = withoutUnit(value) + step + unit(value)
+    const semantic = fullFontConfig.semantic ?? {}
+    const size = Object.fromEntries(toPairs(semantic).map(([key, value]) => [key, value.size]))
+    const weight = Object.fromEntries(toPairs(semantic).map(([key, value]) => [key, value.weight]))
+    const lineHeight = Object.fromEntries(
+        toPairs(semantic)
+            .flatMap(([key, value]) => {
+                if (!value.lineHeight) return []
+                if (isArray(value.lineHeight)) {
+                    return value.lineHeight.map((height, index) => [
+                        `${key}-${sizeSemantic(index)}`,
+                        resolveLineHeight(value.size, height),
+                    ])
+                }
+                return toPairs(value.lineHeight).map(([heightKey, height]) => [
+                    `${key}-${heightKey}`,
+                    resolveLineHeight(value.size, height),
+                ])
             })
-        })
-    }
+            .filter(([, value]) => value),
+    )
 
     return {
         size,
@@ -28,4 +33,8 @@ export function commonGenFont(fontConfig?: FontConfig) {
         lineHeight,
         disableDefault: fullFontConfig.disableDefault,
     }
+}
+
+function resolveLineHeight(size: string, lineHeight: string) {
+    return lineHeight.startsWith("+") ? `${withoutUnit(size) + withoutUnit(lineHeight)}${unit(size)}` : lineHeight
 }

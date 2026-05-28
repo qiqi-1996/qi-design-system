@@ -28,8 +28,9 @@
         "load-config-from-example": "Load Example Configuration",
 
         "tabs": {
-            "design-docs": "Deisgn Docs",
-            "developer": "Developer"
+            "design-docs": "Design Docs",
+            "config-file": "Config File",
+            "tailwind": "Tailwind"
         }
     }
 }

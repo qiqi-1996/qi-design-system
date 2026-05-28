@@ -1,166 +1,96 @@
 import { ArrayedForm, ArrayedKeyValuePairsItemRender, FormTitle, type UnifiedFormProps } from "@/components/form"
-import { fontSchema, type FontConfig } from "@core"
-import { Accordion, Input, NativeSelect, NumberInput, Paper } from "@mantine/core"
-import { produce } from "immer"
-import { fromPairs, toPairs } from "lodash"
+import type { FontConfig, FontSemanticItemConfig } from "@core"
+import { Input, NativeSelect } from "@mantine/core"
+import { fromPairs, isArray, toPairs } from "lodash"
 import { useTranslation } from "react-i18next"
-import type { DeepRequired } from "ts-essentials"
 
-const defaultValue = fontSchema().parse({})
+type FontSemanticEditorItem = {
+    key: string
+} & FontSemanticItemConfig
 
-const defaultProduce = produce<FontConfig>((draft) => {
-    draft = draft || defaultValue
-    draft.lineHeight = draft.lineHeight || defaultValue.lineHeight || {}
-    draft.lineHeight.auto = draft.lineHeight.auto || defaultValue.lineHeight?.auto || {}
-    draft.size = draft.size || defaultValue.size || {}
-    draft.size.semantic = draft.size.semantic || defaultValue.size?.semantic || {}
-    draft.weight = draft.weight || defaultValue.weight || {}
-    draft.weight.semantic = draft.weight.semantic || defaultValue.weight?.semantic || {}
-    return draft
-}) as (draft: FontConfig | undefined) => DeepRequired<FontConfig>
+const fontWeightData = ["", "100", "200", "300", "400", "500", "600", "700", "800", "900"]
+
+const toEditorValue = (semantic: FontConfig["semantic"] | undefined): FontSemanticEditorItem[] =>
+    toPairs(semantic ?? {}).map(([key, value]) => ({
+        key,
+        ...value,
+    }))
+
+const toConfigSemantic = (value: FontSemanticEditorItem[] | undefined): FontConfig["semantic"] =>
+    fromPairs(value?.filter((item) => item.key).map(({ key, ...item }) => [key, item])) as FontConfig["semantic"]
 
 export default function EditFont(props: UnifiedFormProps<FontConfig | undefined>) {
     const { value, onChange } = props
-
-    const [t] = useTranslation()
     const [tc] = useTranslation("core")
 
     return (
         <div className="flex flex-col gap-2">
-            <FormTitle>
-                <ArrayedForm
-                    title={{
-                        title: tc("schema.font.size.title"),
-                        description: tc("schema.font.size.semantic-desc"),
-                    }}
-                    value={toPairs(value?.size?.semantic)}
-                    onChange={(pairs) => {
-                        onChange(
-                            produce(defaultProduce(value), (draft) => {
-                                draft.size.semantic = fromPairs(pairs)
-                            }),
-                        )
-                    }}
-                    itemDefaultValue={["", ""]}
-                    itemRender={ArrayedKeyValuePairsItemRender}
-                    inline
-                />
-            </FormTitle>
-            <FormTitle>
-                <ArrayedForm
-                    title={{
-                        title: tc("schema.font.weight.title"),
-                        description: tc("schema.font.weight.semantic-desc"),
-                    }}
-                    value={toPairs(value?.weight?.semantic)}
-                    onChange={(pairs) => {
-                        onChange(
-                            produce(defaultProduce(value), (draft) => {
-                                draft.weight.semantic = fromPairs(pairs)
-                            }),
-                        )
-                    }}
-                    itemDefaultValue={["", ""]}
-                    itemRender={FontWeightItemRender}
-                    inline
-                />
-            </FormTitle>
-            <FormTitle title={tc("schema.font.line-height.title")}>
-                <Paper className="p-2">
-                    <Accordion defaultValue="semantic" variant="contained">
-                        <Accordion.Item value="semantic">
-                            <Accordion.Control>{tc("common.semantic")}</Accordion.Control>
-                            <Accordion.Panel>
-                                <ArrayedForm
-                                    title={{
-                                        description: tc("schema.font.line-height.semantic-desc"),
-                                    }}
-                                    value={toPairs(value?.lineHeight?.semantic)}
-                                    onChange={(pairs) =>
-                                        onChange(
-                                            produce(defaultProduce(value), (draft) => {
-                                                draft.lineHeight.semantic = fromPairs(pairs)
-                                            }),
-                                        )
-                                    }
-                                    itemDefaultValue={["", ""]}
-                                    itemRender={ArrayedKeyValuePairsItemRender}
-                                    inline
-                                />
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                        <Accordion.Item value="auto">
-                            <Accordion.Control>{tc("schema.font.line-height.auto.title")}</Accordion.Control>
-                            <Accordion.Panel>
-                                <div className="flex flex-col gap-2">
-                                    <FormTitle
-                                        title={tc("schema.font.line-height.auto.value")}
-                                        description={tc("schema.font.line-height.auto.value-desc")}
-                                    >
-                                        <NumberInput
-                                            value={value?.lineHeight?.auto?.value}
-                                            onChange={(autoValue) =>
-                                                onChange(
-                                                    produce(defaultProduce(value), (draft) => {
-                                                        draft.lineHeight.auto.value = Number(autoValue)
-                                                    }),
-                                                )
-                                            }
-                                        />
-                                    </FormTitle>
-                                    <FormTitle
-                                        title={tc("schema.font.line-height.auto.range")}
-                                        description={tc("schema.font.line-height.auto.range-desc")}
-                                    >
-                                        <div className="flex gap-1">
-                                            <NumberInput
-                                                placeholder="from"
-                                                value={value?.lineHeight?.auto?.range?.[0]}
-                                                onChange={(rangeStart) =>
-                                                    onChange(
-                                                        produce(defaultProduce(value), (draft) => {
-                                                            draft.lineHeight.auto.range[0] = Number(rangeStart)
-                                                        }),
-                                                    )
-                                                }
-                                            />
-                                            <NumberInput
-                                                placeholder="to"
-                                                value={value?.lineHeight?.auto?.range?.[1]}
-                                                onChange={(rangeEnd) =>
-                                                    onChange(
-                                                        produce(defaultProduce(value), (draft) => {
-                                                            draft.lineHeight.auto.range[1] = Number(rangeEnd)
-                                                        }),
-                                                    )
-                                                }
-                                            />
-                                        </div>
-                                    </FormTitle>
-                                </div>
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    </Accordion>
-                </Paper>
-            </FormTitle>
+            <ArrayedForm
+                title={{
+                    title: tc("common.semantic"),
+                    description: tc("schema.font.size.semantic-desc"),
+                }}
+                value={toEditorValue(value?.semantic)}
+                onChange={(semantic) =>
+                    onChange({
+                        ...value,
+                        semantic: toConfigSemantic(semantic),
+                    })
+                }
+                itemDefaultValue={{ key: "", size: "", weight: "400", lineHeight: [] }}
+                itemRender={FontSemanticItemRender}
+            />
         </div>
     )
 }
 
-export function FontWeightItemRender(props: UnifiedFormProps<[key: string, value: any]>) {
-    const { value: [key, value] = ["", ""], onChange } = props
+function FontSemanticItemRender(props: UnifiedFormProps<FontSemanticEditorItem>) {
+    const { value, onChange } = props
+    const [tc] = useTranslation("core")
+    const lineHeightPairs = isArray(value.lineHeight)
+        ? value.lineHeight.map((height) => ["", height])
+        : toPairs(value.lineHeight)
 
     return (
-        <div className="flex gap-1">
-            <Input
-                placeholder="key"
-                value={key}
-                onChange={({ currentTarget: { value: newKey } }) => onChange([newKey, value])}
-            ></Input>
-            <NativeSelect
-                value={value}
-                onChange={(evt) => onChange([key, evt.currentTarget.value])}
-                data={["100", "200", "300", "400", "500", "600", "700", "800", "900"]}
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-3 gap-2">
+                <FormTitle title="Name">
+                    <Input value={value.key} onChange={(evt) => onChange({ ...value, key: evt.currentTarget.value })} />
+                </FormTitle>
+                <FormTitle title={tc("schema.font.size.title")}>
+                    <Input
+                        value={value.size}
+                        onChange={(evt) => onChange({ ...value, size: evt.currentTarget.value })}
+                    />
+                </FormTitle>
+                <FormTitle title={tc("schema.font.weight.title")}>
+                    <NativeSelect
+                        value={value.weight}
+                        onChange={(evt) =>
+                            onChange({ ...value, weight: evt.currentTarget.value as FontSemanticItemConfig["weight"] })
+                        }
+                        data={fontWeightData}
+                    />
+                </FormTitle>
+            </div>
+            <ArrayedForm
+                title={{
+                    title: tc("schema.font.line-height.title"),
+                    description: tc("schema.font.line-height.semantic-desc"),
+                }}
+                value={lineHeightPairs as [string, string][]}
+                onChange={(pairs) => {
+                    const lineHeight = pairs?.some(([key]) => key)
+                        ? fromPairs(pairs?.filter(([key]) => key))
+                        : pairs?.map(([, height]) => height).filter(Boolean)
+                    onChange({
+                        ...value,
+                        lineHeight,
+                    })
+                }}
+                itemDefaultValue={["", ""]}
+                itemRender={ArrayedKeyValuePairsItemRender}
+                inline
             />
         </div>
     )

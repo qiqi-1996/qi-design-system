@@ -5,7 +5,7 @@ import { isColorVariable } from "@core/helper/color"
 
 export function genColor(colorConfig: z.infer<typeof colorSchema>) {
     const fullColorConfig = colorSchema().parse(colorConfig)
-    const fullPalette = commonGenColorPalette(fullColorConfig.palettes ?? [])
+    const fullPalette = commonGenColorPalette(fullColorConfig.palette ?? [])
     const fullSemantic = commonGenColorSemantic(fullColorConfig.semantic ?? {})
 
     return [

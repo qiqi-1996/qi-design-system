@@ -24,7 +24,7 @@ export const toColorConfigSemantic = (value: EditColorSemanticsValue | undefined
     fromPairs(value?.map((item) => [item.key, omit(item, "key")])) as ColorConfig["semantic"]
 
 export function EditColorSemantics(
-    props: UnifiedFormProps<EditColorSemanticsValue | undefined> & { colorPalettesConfig: ColorConfig["palettes"] },
+    props: UnifiedFormProps<EditColorSemanticsValue | undefined> & { colorPalettesConfig: ColorConfig["palette"] },
 ) {
     const { colorPalettesConfig } = props
     const [tc] = useTranslation("core")

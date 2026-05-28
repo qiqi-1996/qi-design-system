@@ -1,16 +1,17 @@
 import { CodeBlock } from "@/components/code-block"
-import { formatJson } from "@/utils/format-json"
+import { genTailwindV4 } from "@core"
+import { formatCode } from "@core/helper/format"
 import { useEffect, useState, type ComponentProps } from "react"
 import type { DesignSystemEditorValue } from "../editor/types"
 
-export function DesignSystemJson(props: ComponentProps<"div"> & { value: DesignSystemEditorValue }) {
+export function DesignSystemTailwind(props: ComponentProps<"div"> & { value: DesignSystemEditorValue }) {
     const { value, ...rest } = props
     const [code, setCode] = useState("")
 
     useEffect(() => {
         let mounted = true
 
-        formatJson(JSON.stringify(value.config)).then((code) => {
+        formatCode(genTailwindV4(value.config)).then((code) => {
             if (mounted) setCode(code)
         })
 
@@ -21,7 +22,7 @@ export function DesignSystemJson(props: ComponentProps<"div"> & { value: DesignS
 
     return (
         <div {...rest}>
-            <CodeBlock code={code} lang="json" />
+            <CodeBlock code={code} lang="css" />
         </div>
     )
 }

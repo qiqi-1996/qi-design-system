@@ -2,13 +2,15 @@ import { ExampleDesignSystemConfig, GotoDesignSystemEditor } from "../../compone
 
 # 概述
 
-描述一次设计系统, 输出多套框架配置（Tailwind、Chakra UI、Ant Design 等等）。
+Qi Design System 是一个开源设计系统配置生成工具。你用一份 `design-system.json` 描述空间、颜色和文字系统，然后通过 CLI 生成 Tailwind v4 主题 CSS 与 Mantine 主题文件。
+
+它适合需要让设计令牌在多个前端库之间保持一致的团队：配置可提交到仓库，生成物可随项目版本化，减少手写主题文件和跨库配置漂移。
 
 # 快速上手
 
 1. 安装依赖
 
-```
+```bash
 npm install @qiqi1996/design-system
 ```
 
@@ -16,65 +18,275 @@ npm install @qiqi1996/design-system
 
 <ExampleDesignSystemConfig />
 
-3. 配置输出位置
+3. 构建配置
 
-修改 `design-system.json` 中的 `output` 字段以符合项目需要。上方示例表示：将设计系统配置以 tailwind-v4 的形式构建，输出到 `./src-docs/theme.css` 文件中。
-
-4. 构建配置
-
-```
+```bash
 npx qi-design-system --config /path/to/design-system.json
 ```
 
-命令行会默认获取项目根目录下的 `design-system.json` 可无需配置 `--config` 参数
+命令默认读取项目根目录下的 `design-system.json`，因此多数情况下可以省略 `--config`。
 
 # 配置
 
-大部分配置都可以使用我们的可视化编辑器进行配置和预览。以下文档仅推荐供纯手工配置的用户查阅。
+大部分配置都可以使用可视化编辑器进行配置和预览。以下文档适合需要手写 JSON 或接入工程流水线的用户。
 
 <GotoDesignSystemEditor />
 
-## schema
+## Schema
 
-这主要是一些编辑器对于 JSON 的支持特性，用于加强字段的智能提示。`Qi Design System` 提供了多语言的 Schema 文件可供使用。目前我们提供的多语言版本有：
+`$schema` 用于让 VSCode 等编辑器获得字段提示和校验。包内提供多语言 JSON Schema：
 
 - `schema-zh.json`: 简体中文
 - `schema-en.json`: English
 
-### 例如
-
-```
+```json
 {
-    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json",
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json"
 }
 ```
 
-## output
+## 完整结构
 
-定义输出什么类型的配置，以及配置输出到什么位置。目前支持的输出类型有：
-
-- tailwind-v4: Tailwind V4 版本的主题配置
-
-输出位置可使用相对路径，相对于设计系统配置 json 的文件位置。
-
-### 格式
-
-```
+```json
 {
-    "output": {
-        "输出类型": "输出位置"
+    "output": [],
+    "space": {},
+    "color": {
+        "palette": [],
+        "semantic": {}
+    },
+    "font": {
+        "semantic": {}
     }
 }
 ```
 
-### 例如
+所有系统字段都是可选的。只配置 `color` 时只生成颜色变量；只配置 `font` 时只生成文字相关变量。
 
-将设计系统输出为 `Tailwind v4` 的主题配置，并且输出到 `./src-docs/theme.css`
+## output
 
-```
+`output` 定义生成目标。它是一个数组，每一项包含输出类型和输出路径。
+
+| 字段   | 类型                       | 说明         |
+| ------ | -------------------------- | ------------ |
+| `type` | `tailwind-v4` 或 `mantine` | 生成器类型   |
+| `path` | `string`                   | 输出文件路径 |
+
+```json
 {
-    "output": {
-        "tailwind-v4": "./src-docs/theme.css"
+    "output": [
+        { "type": "tailwind-v4", "path": "./src/theme.css" },
+        { "type": "mantine", "path": "./src/theme.ts" }
+    ]
+}
+```
+
+生成结果：
+
+- `tailwind-v4`: 输出 `@theme { ... }` CSS，可被 Tailwind v4 直接读取。
+- `mantine`: 输出 `createTheme(...)` 主题文件。
+
+## space
+
+`space` 定义空间系统，目前用于生成 Tailwind 的 `--spacing`。
+
+| 字段   | 类型     | 说明                   |
+| ------ | -------- | ---------------------- |
+| `base` | `number` | 基础间距数值           |
+| `unit` | `string` | 单位，例如 `px`、`rem` |
+
+```json
+{
+    "space": { "base": 8, "unit": "px" }
+}
+```
+
+会生成：
+
+```css
+--spacing: 8px;
+```
+
+## color.palette
+
+`color.palette` 定义色板。每个色板会生成 `--color-{name}` 与 `--color-{name}-100` 到 `--color-{name}-1000`。
+
+| 字段   | 类型                                  | 说明                                         |
+| ------ | ------------------------------------- | -------------------------------------------- |
+| `type` | `ant-design` 或 `qi-design-system-v0` | 色板生成算法                                 |
+| `name` | `string`                              | 色板名，例如 `brand`、`danger`、`brand-dark` |
+| `base` | `string`                              | 基础颜色                                     |
+| `args` | `array`                               | 传给色板生成函数的额外参数                   |
+
+```json
+{
+    "color": {
+        "palette": [
+            { "type": "ant-design", "name": "brand", "base": "#002FA7" },
+            { "type": "ant-design", "name": "brand-dark", "base": "#0048ff" },
+            { "type": "ant-design", "name": "danger", "base": "#a70000" }
+        ]
+    }
+}
+```
+
+会生成类似变量：
+
+```css
+--color-brand: #0034b8;
+--color-brand-100: #ffffff;
+--color-brand-600: #0040e0;
+--color-brand-dark-600: #2f6bff;
+```
+
+## color.semantic
+
+`color.semantic` 定义语义颜色。键名就是语义变量名，例如 `primary`、`danger`、`border`。
+
+每个语义可以配置：
+
+- `default`: 默认主题
+- `dark`: 暗色主题。未配置时表示暗色主题和默认主题一致，不额外生成暗色变量。
+
+### Chakra 风格语义
+
+`type: "chakra"` 会基于一个色板位置生成常用语义变量：
+
+- `{name}`: 等价于 `{name}-solid`
+- `{name}-solid`
+- `{name}-contrast`
+- `{name}-fg`
+- `{name}-muted`
+- `{name}-subtle`
+- `{name}-emphasized`
+
+```json
+{
+    "color": {
+        "semantic": {
+            "primary": {
+                "default": { "type": "chakra", "base": "brand-600" },
+                "dark": { "type": "chakra", "base": "brand-dark-600" }
+            }
+        }
+    }
+}
+```
+
+`base` 决定语义变量基于哪个色板。当其他字段只写 `100`、`200` 这类色阶时，会自动复用 `base` 的色板名。
+
+```json
+{
+    "danger": {
+        "default": {
+            "type": "chakra",
+            "base": "danger-600",
+            "contrast": "danger-100",
+            "fg": "danger-200",
+            "muted": "danger-300",
+            "subtle": "danger-400",
+            "emphasized": "danger-500"
+        }
+    }
+}
+```
+
+### 自定义语义
+
+`type: "custom"` 适合边框、背景、文本辅助色等不需要色阶推导的变量。
+
+```json
+{
+    "color": {
+        "semantic": {
+            "border": { "default": { "type": "custom", "default": "#E7E7E7" } },
+            "secondary-background": { "default": { "type": "custom", "default": "#FAFAFA" } }
+        }
+    }
+}
+```
+
+## font.semantic
+
+`font.semantic` 定义文字系统。键名就是语义名，例如 `footnote`、`text`、`subtitle`、`title`。
+
+| 字段         | 类型                                   | 说明                                   |
+| ------------ | -------------------------------------- | -------------------------------------- |
+| `size`       | `string`                               | 字号，生成 `--text-{name}`             |
+| `lineHeight` | `string[]` 或 `Record<string, string>` | 行高，支持绝对值和 `+Npx` 相对字号写法 |
+| `weight`     | `100` 到 `900`                         | 字重，生成 `--font-weight-{name}`      |
+
+```json
+{
+    "font": {
+        "semantic": {
+            "footnote": {
+                "size": "12px",
+                "lineHeight": ["+0px", "+4px", "+8px"],
+                "weight": "400"
+            },
+            "text": {
+                "size": "14px",
+                "lineHeight": ["14px", "18px", "22px"],
+                "weight": "400"
+            },
+            "subtitle": {
+                "size": "16px",
+                "lineHeight": {
+                    "my-xs": "+0px",
+                    "my-sm": "+4px",
+                    "my-md": "+8px"
+                },
+                "weight": "500"
+            },
+            "title": {
+                "size": "24px",
+                "weight": "600"
+            }
+        }
+    }
+}
+```
+
+数组形式会按顺序生成 `xs`、`sm`、`md`、`lg`、`xl` 等别名：
+
+```css
+--text-footnote: 12px;
+--leading-footnote-xs: 12px;
+--leading-footnote-sm: 16px;
+--leading-footnote-md: 20px;
+--font-weight-footnote: 400;
+```
+
+对象形式会使用自定义别名：
+
+```css
+--leading-subtitle-my-xs: 16px;
+--leading-subtitle-my-sm: 20px;
+--leading-subtitle-my-md: 24px;
+```
+
+## 完整示例
+
+```json
+{
+    "$schema": "./node_modules/@qiqi1996/design-system/dist/schema-zh.json",
+    "output": [
+        { "type": "tailwind-v4", "path": "./src/theme.css" },
+        { "type": "mantine", "path": "./src/theme.ts" }
+    ],
+    "space": { "base": 8, "unit": "px" },
+    "color": {
+        "palette": [{ "type": "ant-design", "name": "brand", "base": "#002FA7" }],
+        "semantic": {
+            "primary": { "default": { "type": "chakra", "base": "brand-600" } }
+        }
+    },
+    "font": {
+        "semantic": {
+            "text": { "size": "14px", "lineHeight": ["+0px", "+4px", "+8px"], "weight": "400" },
+            "title": { "size": "24px", "weight": "600" }
+        }
     }
 }
 ```
