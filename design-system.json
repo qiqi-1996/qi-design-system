@@ -38,12 +38,17 @@
                 "default": { "type": "chakra", "base": "danger-600" },
                 "dark": { "type": "chakra", "base": "danger-dark-600" }
             },
-            "border": { "default": { "type": "custom", "default": "#E4E2DD" } },
-            "color-footnote": { "default": { "type": "custom", "default": "#7C7A76" } },
-            "secondary-background": { "default": { "type": "custom", "default": "#F6F3ED" } },
-            "panel": {
-                "default": { "type": "custom", "default": "#FFFFFF" },
-                "dark": { "type": "custom", "default": "#171A24" }
+            "border": {
+                "default": { "type": "custom", "default": "#E5E5E5" },
+                "dark": { "type": "custom", "default": "#3A3A3A" }
+            },
+            "color-footnote": {
+                "default": { "type": "custom", "default": "#777777" },
+                "dark": { "type": "custom", "default": "#A3A3A3" }
+            },
+            "secondary-background": {
+                "default": { "type": "custom", "default": "#F5F5F5" },
+                "dark": { "type": "custom", "default": "#333333" }
             }
         }
     },

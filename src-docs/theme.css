@@ -116,10 +116,9 @@
     --color-danger-muted: var(--color-danger-300);
     --color-danger-subtle: var(--color-danger-400);
     --color-danger-emphasized: var(--color-danger-500);
-    --color-border: #e4e2dd;
-    --color-color-footnote: #7c7a76;
-    --color-secondary-background: #f6f3ed;
-    --color-panel: #ffffff;
+    --color-border: #e5e5e5;
+    --color-color-footnote: #777777;
+    --color-secondary-background: #f5f5f5;
     --text-*: initial;
     --leading-*: initial;
     --font-weight-*: initial;
@@ -179,5 +178,7 @@
     --color-danger-muted: var(--color-danger-dark-300);
     --color-danger-subtle: var(--color-danger-dark-400);
     --color-danger-emphasized: var(--color-danger-dark-500);
-    --color-panel: #171a24;
+    --color-border: #3a3a3a;
+    --color-color-footnote: #a3a3a3;
+    --color-secondary-background: #333333;
 }

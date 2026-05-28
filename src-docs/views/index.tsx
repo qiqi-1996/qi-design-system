@@ -61,25 +61,28 @@ export default function HomePage() {
 
     return (
         <AppPage>
-            <div className="relative overflow-hidden rounded-[40px] border border-black/8 bg-[#fbf7ef] px-4 py-5 text-[#17130f] sm:px-7 sm:py-8 lg:px-10 lg:py-10">
-                <div className="pointer-events-none absolute top-[-120px] right-[-80px] h-[360px] w-[360px] rounded-full bg-[#e9c7ad]/45 blur-[96px]" />
-                <div className="pointer-events-none absolute bottom-[-160px] left-[-120px] h-[420px] w-[420px] rounded-full bg-[#d8dec8]/55 blur-[120px]" />
-                <div className="pointer-events-none absolute top-[36%] right-[22%] h-[280px] w-[280px] rounded-full bg-[#d9c7ee]/35 blur-[110px]" />
-                <div className="pointer-events-none absolute top-1/2 right-[18%] h-24 w-24 -translate-y-1/2 rounded-full border border-black/10" />
+            <div className="relative overflow-hidden rounded-[40px] border border-black/8 bg-[#fbf7ef] px-4 py-5 text-[#17130f] sm:px-7 sm:py-8 lg:px-10 lg:py-10 dark:border-white/10 dark:bg-[#11131b] dark:text-[#f7f0e6]">
+                <div className="pointer-events-none absolute top-[-120px] right-[-80px] h-[360px] w-[360px] rounded-full bg-[#e9c7ad]/45 blur-[96px] dark:bg-[#844d2f]/32" />
+                <div className="pointer-events-none absolute bottom-[-160px] left-[-120px] h-[420px] w-[420px] rounded-full bg-[#d8dec8]/55 blur-[120px] dark:bg-[#4f7065]/32" />
+                <div className="pointer-events-none absolute top-[36%] right-[22%] h-[280px] w-[280px] rounded-full bg-[#d9c7ee]/35 blur-[110px] dark:bg-[#524b97]/30" />
+                <div className="pointer-events-none absolute top-1/2 right-[18%] h-24 w-24 -translate-y-1/2 rounded-full border border-black/10 dark:border-white/12" />
 
                 <section className="relative grid min-h-[560px] grid-cols-1 items-center gap-6 lg:grid-cols-[1fr_320px]">
                     <div>
                         <div className="mb-5 flex flex-wrap items-center gap-2">
-                            <Badge variant="outline" color="dark" className="!border-black/15 !text-[#17130f]">
+                            <Badge
+                                variant="outline"
+                                className="!border-black/10 !text-[#17130f] dark:!border-white/12 dark:!text-[#f7f0e6]"
+                            >
                                 {page.label}
                             </Badge>
-                            <span className="text-footnote text-black/50">{page.note}</span>
+                            <span className="text-footnote text-black/45 dark:text-white/48">{page.note}</span>
                         </div>
 
                         <h1 className="max-w-[920px] [font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif] text-[42px] leading-[1.06] font-[760] tracking-[-0.055em] text-balance sm:text-[64px] lg:text-[88px]">
                             {page.slogan}
                         </h1>
-                        <p className="mt-5 max-w-[760px] text-[18px] leading-7 text-black/58 sm:text-[21px]">
+                        <p className="mt-5 max-w-[760px] text-[18px] leading-7 text-black/58 sm:text-[21px] dark:text-white/68">
                             {page.description}
                         </p>
 
@@ -107,15 +110,15 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    <aside className="relative rounded-[32px] border border-black/10 bg-white/55 p-4 shadow-2xl shadow-black/5 backdrop-blur-md">
-                        <div className="mb-4 text-footnote tracking-[0.2em] text-black/45 uppercase">
+                    <aside className="relative rounded-[32px] border border-black/10 bg-white/70 p-4 shadow-2xl shadow-black/5 backdrop-blur-md dark:border-white/12 dark:bg-[#181b26]/78 dark:shadow-black/28">
+                        <div className="mb-4 text-footnote tracking-[0.2em] text-black/45 uppercase dark:text-white/48">
                             {page.supported}
                         </div>
                         <div className="flex flex-col gap-2">
                             {page.supportedItems.map((item) => (
                                 <div
                                     key={item}
-                                    className="rounded-2xl border border-black/10 bg-white/70 px-3 py-2 text-subtitle font-subtitle"
+                                    className="rounded-2xl border border-black/10 bg-white/70 px-3 py-2 text-subtitle font-subtitle dark:border-white/12 dark:bg-[#181b26]/78"
                                 >
                                     {item}
                                 </div>
@@ -133,14 +136,14 @@ export default function HomePage() {
                     </h2>
                 </div>
                 <div className="flex flex-col justify-between gap-4">
-                    <p className="text-[18px] leading-8 text-black/58">{page.valueDescription}</p>
+                    <p className="text-[18px] leading-8 text-black/58 dark:text-white/68">{page.valueDescription}</p>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                         {page.flow.map((item, index) => (
                             <div
                                 key={item}
-                                className="rounded-[28px] border border-black/10 bg-white p-4 shadow-xl shadow-black/[0.03]"
+                                className="rounded-[28px] border border-black/10 bg-white/70 p-4 shadow-xl shadow-black/5 dark:border-white/12 dark:bg-[#181b26]/78 dark:shadow-black/28"
                             >
-                                <div className="font-black mb-5 text-[40px] leading-none tracking-[-0.06em] text-black/12">
+                                <div className="mb-5 text-[40px] leading-none font-black tracking-[-0.06em] text-black/12 dark:text-white/16">
                                     {String(index + 1).padStart(2, "0")}
                                 </div>
                                 <div className="text-subtitle font-subtitle">{item}</div>

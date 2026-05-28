@@ -1,5 +1,5 @@
 import { Tabs } from "@mantine/core"
-import type { ComponentProps } from "react"
+import { useState, type ComponentProps } from "react"
 import type { DesignSystemEditorValue } from "../editor/types"
 import { DesignSystemDocs } from "./design-docs"
 import { DesignSystemJson } from "./json"
@@ -7,16 +7,24 @@ import { useTranslation } from "react-i18next"
 import { DesignSystemTailwind } from "./tailwind"
 import { DesignSystemMantine } from "./mantine"
 
+type PreviewTab = "docs" | "config" | "tailwind" | "mantine"
+
 export function DesignSystemPreview(props: ComponentProps<"div"> & { value: DesignSystemEditorValue }) {
     const [t] = useTranslation()
+    const [activeTab, setActiveTab] = useState<PreviewTab | null>("docs")
     const outputConfig = props.value.flags.output ? props.value.config.output : []
     const tailwindOutput = outputConfig?.find((output) => output.type === "tailwind-v4")
     const mantineOutput = outputConfig?.find((output) => output.type === "mantine")
-    const defaultTab = tailwindOutput ? "tailwind" : mantineOutput ? "mantine" : "docs"
+    const currentTab =
+        activeTab === "tailwind" && !tailwindOutput
+            ? "docs"
+            : activeTab === "mantine" && !mantineOutput
+              ? "docs"
+              : (activeTab ?? "docs")
 
     return (
         <div {...props}>
-            <Tabs key={defaultTab} defaultValue={defaultTab} variant="pills">
+            <Tabs value={currentTab} onChange={(value) => setActiveTab(value as PreviewTab | null)} variant="pills">
                 <Tabs.List className="mb-3" justify="center">
                     <Tabs.Tab value="docs">{t("editor.tabs.design-docs")}</Tabs.Tab>
                     <Tabs.Tab value="config">{t("editor.tabs.config-file")}</Tabs.Tab>
