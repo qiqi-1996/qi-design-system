@@ -6,8 +6,9 @@ import { DesignSystemJson } from "./json"
 import { useTranslation } from "react-i18next"
 import { DesignSystemTailwind } from "./tailwind"
 import { DesignSystemMantine } from "./mantine"
+import { DesignSystemEsModule } from "./esmodule"
 
-type PreviewTab = "docs" | "config" | "tailwind" | "mantine"
+type PreviewTab = "docs" | "config" | "tailwind" | "mantine" | "esmodule"
 
 export function DesignSystemPreview(props: ComponentProps<"div"> & { value: DesignSystemEditorValue }) {
     const [t] = useTranslation()
@@ -15,12 +16,15 @@ export function DesignSystemPreview(props: ComponentProps<"div"> & { value: Desi
     const outputConfig = props.value.flags.output ? props.value.config.output : []
     const tailwindOutput = outputConfig?.find((output) => output.type === "tailwind-v4")
     const mantineOutput = outputConfig?.find((output) => output.type === "mantine")
+    const esmoduleOutput = outputConfig?.find((output) => output.type === "esmodule")
     const currentTab =
         activeTab === "tailwind" && !tailwindOutput
             ? "docs"
             : activeTab === "mantine" && !mantineOutput
               ? "docs"
-              : (activeTab ?? "docs")
+              : activeTab === "esmodule" && !esmoduleOutput
+                ? "docs"
+                : (activeTab ?? "docs")
 
     return (
         <div {...props}>
@@ -30,6 +34,7 @@ export function DesignSystemPreview(props: ComponentProps<"div"> & { value: Desi
                     <Tabs.Tab value="config">{t("editor.tabs.config-file")}</Tabs.Tab>
                     {tailwindOutput && <Tabs.Tab value="tailwind">{t("editor.tabs.tailwind")}</Tabs.Tab>}
                     {mantineOutput && <Tabs.Tab value="mantine">{t("editor.tabs.mantine")}</Tabs.Tab>}
+                    {esmoduleOutput && <Tabs.Tab value="esmodule">{t("editor.tabs.esmodule")}</Tabs.Tab>}
                 </Tabs.List>
 
                 <Tabs.Panel value="docs">
@@ -49,6 +54,12 @@ export function DesignSystemPreview(props: ComponentProps<"div"> & { value: Desi
                 {mantineOutput && (
                     <Tabs.Panel value="mantine">
                         <DesignSystemMantine value={props.value} />
+                    </Tabs.Panel>
+                )}
+
+                {esmoduleOutput && (
+                    <Tabs.Panel value="esmodule">
+                        <DesignSystemEsModule value={props.value} />
                     </Tabs.Panel>
                 )}
             </Tabs>

@@ -3,6 +3,7 @@ import { genTailwindV4 } from "../generator/tailwind-v4"
 import { designSystemCliSchema } from "../schema"
 import fs from "node:fs/promises"
 import { genMantine } from "@core/generator/mantine"
+import { genEsModule } from "@core/generator/esmodule"
 
 export async function emitFile(filePath: string, content: string) {
     await fs
@@ -36,6 +37,9 @@ export async function generateContent(configPath: string) {
             await emitFile(output.path, result)
         } else if (output.type === "mantine") {
             const result = genMantine(system)
+            await emitFile(output.path, result)
+        } else if (output.type === "esmodule") {
+            const result = genEsModule(system, { path: output.path })
             await emitFile(output.path, result)
         }
     }

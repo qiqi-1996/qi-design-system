@@ -38,13 +38,16 @@ function OutputItemRender(props: UnifiedFormProps<OutputItemConfig>) {
                         data={[
                             { label: "Tailwind v4", value: "tailwind-v4" },
                             { label: "Mantine", value: "mantine" },
+                            { label: "ESModule", value: "esmodule" },
                         ]}
                         onChange={(evt) => {
                             const type = evt.currentTarget.value
                             setState(
                                 type === "tailwind-v4"
                                     ? { type, path: "./theme.css", disableDefault: [], darkClass: ".dark" }
-                                    : { type, path: "./theme.ts" },
+                                    : type === "mantine"
+                                      ? { type, path: "./theme.ts" }
+                                      : { type, path: "./theme.ts" },
                             )
                         }}
                     />

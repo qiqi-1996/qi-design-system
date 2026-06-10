@@ -17,6 +17,10 @@ export const outputSchema = () =>
                     type: z.literal("mantine").meta({ title: "输出类型", description: "例如：mantine" }),
                     path: z.string().meta({ title: "输出位置", description: "例如：./src/theme.ts" }),
                 }),
+                z.object({
+                    type: z.literal("esmodule").meta({ title: "输出类型", description: "例如：esmodule" }),
+                    path: z.string().meta({ title: "输出位置", description: "例如：./src/theme.ts" }),
+                }),
             ]),
         )
         .meta({

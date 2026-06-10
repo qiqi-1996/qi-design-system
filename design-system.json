@@ -7,7 +7,8 @@
             "disableDefault": ["font-size", "leading", "weight"],
             "darkClass": ".dark"
         },
-        { "type": "mantine", "path": "./src-docs/theme.ts" }
+        { "type": "mantine", "path": "./src-docs/theme.ts" },
+        { "type": "esmodule", "path": "./src-docs/design-token.js" }
     ],
     "space": { "base": 8, "unit": "px" },
     "color": {

@@ -31,7 +31,8 @@
             "design-docs": "Design Docs",
             "config-file": "Config File",
             "tailwind": "Tailwind",
-            "mantine": "Mantine"
+            "mantine": "Mantine",
+            "esmodule": "ESModule"
         }
     }
 }
