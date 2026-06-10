@@ -6,15 +6,25 @@ import type { TailwindDisableDefaultConfig } from "@core/schema/output"
 
 export function genColor(
     colorConfig: z.infer<typeof colorSchema>,
-    options?: { disableDefault?: TailwindDisableDefaultConfig },
+    options?: { disableDefault?: TailwindDisableDefaultConfig; darkSemantic?: boolean },
 ) {
     const fullColorConfig = colorSchema().parse(colorConfig)
     const fullPalette = commonGenColorPalette(fullColorConfig.palette ?? [])
     const fullSemantic = commonGenColorSemantic(fullColorConfig.semantic ?? {})
     const disableDefault = options?.disableDefault ?? []
+    const darkSemantic = options?.darkSemantic ?? true
 
-    const rootSemantic = fullSemantic.filter(([name]) => !name.startsWith("dark-"))
-    const darkSemantic = fullSemantic.filter(([name]) => name.startsWith("dark-"))
+    const rootSemantic: [string, string][] = []
+
+    for (const [name, value] of fullSemantic) {
+        if (name.startsWith("dark-")) {
+            if (darkSemantic) {
+                rootSemantic.push([name.slice(5) + "-dark", value])
+            }
+        } else {
+            rootSemantic.push([name, value])
+        }
+    }
 
     const root = [
         disableDefault.includes("color") ? `--color-*: initial;` : "",
@@ -29,15 +39,5 @@ export function genColor(
         .filter(Boolean)
         .join("\n")
 
-    const dark = darkSemantic
-        .map(([name, value]) => {
-            const semanticName = name.replace(/^dark-/, "")
-            return `--color-${semanticName}: ${isColorVariable(value) ? `var(--color-${value});` : value};`
-        })
-        .join("\n")
-
-    return {
-        root,
-        dark,
-    }
+    return { root, dark: "" }
 }

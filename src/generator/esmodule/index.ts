@@ -5,17 +5,23 @@ import { commonGenFont } from "../common/font"
 import { isColorVariable, resolveColorVariable } from "@core/helper/color"
 import { toPairs } from "lodash"
 
+export type EsModuleOptions = {
+    path?: string
+    darkSemantic?: boolean
+}
+
 export function genEsModule(
     data: z.infer<ReturnType<typeof designSystemSchema>>,
-    options?: { path?: string },
+    options?: EsModuleOptions,
 ) {
     const system = designSystemSchema().parse(data)
     const isJs = options?.path?.endsWith(".js") ?? false
     const asConst = isJs ? "" : " as const"
+    const darkSemantic = options?.darkSemantic ?? true
 
     const sections = [
         genSpace(system.space, asConst),
-        genColor(system.color, asConst),
+        genColor(system.color, asConst, { darkSemantic }),
         genFont(system.font, asConst),
     ].filter(Boolean)
 
@@ -33,11 +39,13 @@ function genSpace(
 function genColor(
     colorData: z.infer<ReturnType<typeof designSystemSchema>>["color"],
     asConst: string,
+    options?: { darkSemantic?: boolean },
 ) {
     if (!colorData?.palette?.length && !colorData?.semantic) return ""
 
     const fullPalette = commonGenColorPalette(colorData.palette ?? [])
     const fullSemantic = commonGenColorSemantic(colorData.semantic ?? {})
+    const darkSemantic = options?.darkSemantic ?? true
 
     const paletteMap = new Map(fullPalette)
 
@@ -55,12 +63,18 @@ function genColor(
     for (const [name, data] of fullPalette) {
         colorEntries.push([name, data.primary])
         data.palette.forEach((color, index) => {
-            colorEntries.push([`${name}${(index + 1) * 100}`, color])
+            colorEntries.push([`${name}-${(index + 1) * 100}`, color])
         })
     }
 
     for (const [name, value] of fullSemantic) {
-        colorEntries.push([name, resolveColorValue(value)])
+        if (name.startsWith("dark-")) {
+            if (darkSemantic) {
+                colorEntries.push([name.slice(5) + "-dark", resolveColorValue(value)])
+            }
+        } else {
+            colorEntries.push([name, resolveColorValue(value)])
+        }
     }
 
     const uniqueColorEntries = [...new Map(colorEntries.map(([key, value]) => [key, value])).entries()] as [string, string][]

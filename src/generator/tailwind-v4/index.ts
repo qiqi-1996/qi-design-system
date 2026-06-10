@@ -9,11 +9,12 @@ export type TailwindV4Options = {
     noTheme?: boolean
     disableDefault?: TailwindDisableDefaultConfig
     darkClass?: Extract<OutputConfig[number], { type: "tailwind-v4" }>["darkClass"]
+    darkSemantic?: boolean
 }
 
 export function genTailwindV4(data: z.infer<ReturnType<typeof designSystemSchema>>, options?: TailwindV4Options) {
     const system = designSystemSchema().parse(data)
-    const color = genColor(system.color, { disableDefault: options?.disableDefault })
+    const color = genColor(system.color, { disableDefault: options?.disableDefault, darkSemantic: options?.darkSemantic })
     const body = `${genSpace(system.space)}
     ${color.root}
     ${genFont(system.font, { disableDefault: options?.disableDefault })}`

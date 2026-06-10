@@ -9,7 +9,7 @@ export function DesignSystemEsModule(props: ComponentProps<"div"> & { value: Des
 
     useEffect(() => {
         const output = value.config.output?.find((o) => o.type === "esmodule")
-        const result = genEsModule(value.config, { path: output?.path })
+        const result = genEsModule(value.config, { path: output?.path, darkSemantic: output?.darkSemantic })
         setCode(result)
     }, [value.config])
 

@@ -8,7 +8,7 @@
             "darkClass": ".dark"
         },
         { "type": "mantine", "path": "./src-docs/theme.ts" },
-        { "type": "esmodule", "path": "./src-docs/design-token.js" }
+        { "type": "esmodule", "path": "./src-docs/design-token.ts" }
     ],
     "space": { "base": 8, "unit": "px" },
     "color": {

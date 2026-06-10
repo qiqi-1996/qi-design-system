@@ -32,6 +32,7 @@ export async function generateContent(configPath: string) {
                 genTailwindV4(system, {
                     disableDefault: output.disableDefault,
                     darkClass: output.darkClass,
+                    darkSemantic: output.darkSemantic,
                 }),
             )
             await emitFile(output.path, result)
@@ -39,7 +40,7 @@ export async function generateContent(configPath: string) {
             const result = genMantine(system)
             await emitFile(output.path, result)
         } else if (output.type === "esmodule") {
-            const result = genEsModule(system, { path: output.path })
+            const result = genEsModule(system, { path: output.path, darkSemantic: output.darkSemantic })
             await emitFile(output.path, result)
         }
     }
