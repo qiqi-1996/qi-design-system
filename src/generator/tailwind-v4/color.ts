@@ -15,9 +15,11 @@ export function genColor(
     const darkSemantic = options?.darkSemantic ?? true
 
     const rootSemantic: [string, string][] = []
+    const darkClassSemantic: [string, string][] = []
 
     for (const [name, value] of fullSemantic) {
         if (name.startsWith("dark-")) {
+            darkClassSemantic.push([name.slice(5), value])
             if (darkSemantic) {
                 rootSemantic.push([name.slice(5) + "-dark", value])
             }
@@ -39,5 +41,9 @@ export function genColor(
         .filter(Boolean)
         .join("\n")
 
-    return { root, dark: "" }
+    const dark = darkClassSemantic
+        .map(([name, value]) => `--color-${name}: ${isColorVariable(value) ? `var(--color-${value});` : value};`)
+        .join("\n")
+
+    return { root, dark }
 }
