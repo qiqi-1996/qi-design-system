@@ -104,11 +104,14 @@ export function commonGenColorSemantic(
                               semanticKey !== "type" && semanticKey !== "base" && semanticKey !== "default",
                       )
                       .map(([semanticKey, colorValue]) => {
+                          const value = colorValue as string | undefined
                           return [
                               `${semanticNameWithTheme}-${semanticKey}`,
-                              isColorVariable(colorValue as string)
-                                  ? colorValue
-                                  : `${baseColorPaletteName}-${colorValue ?? "600"}`,
+                              !value
+                                  ? `${baseColorPaletteName}-600`
+                                  : isColorVariable(value) || !isColorPaletteKey(value)
+                                    ? value
+                                    : `${baseColorPaletteName}-${value}`,
                           ]
                       })
                 : []),
